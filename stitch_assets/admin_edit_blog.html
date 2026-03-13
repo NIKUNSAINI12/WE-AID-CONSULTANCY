@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin - Edit Blog - We Aid Consultancy</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4c7e",
+                        "secondary": "#cca43b",
+                        "background-light": "#f6f4f1",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-light font-['Manrope'] min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-2xl w-full bg-white rounded-[2.5rem] shadow-[20px_20px_60px_#e2dbd1,-20px_-20px_60px_#ffffff] p-8 md:p-12 relative overflow-hidden border border-white/50">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+        
+        <div class="relative z-10">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">edit_note</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-primary">Edit Insight</h1>
+                    <p class="text-sm text-slate-500 font-medium">Update the content of your published post.</p>
+                </div>
+            </div>
+
+            <form action="/admin/edit/{{ post.id }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Blog Title</label>
+                    <input type="text" name="title" required value="{{ post.title }}" 
+                        class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Summary Description</label>
+                    <textarea name="description" required rows="3" 
+                        class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all">{{ post.description }}</textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Author Name</label>
+                        <input type="text" name="author" required value="{{ post.author }}" 
+                            class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Author Designation</label>
+                        <input type="text" name="role" required value="{{ post.role }}" 
+                            class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Category / Topic</label>
+                        <select name="category" required class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary transition-all">
+                            <option value="Income Tax" {% if post.category == 'Income Tax' %}selected{% endif %}>Income Tax</option>
+                            <option value="GST Updates" {% if post.category == 'GST Updates' %}selected{% endif %}>GST Updates</option>
+                            <option value="Startup Tips" {% if post.category == 'Startup Tips' %}selected{% endif %}>Startup Tips</option>
+                            <option value="Wealth Management" {% if post.category == 'Wealth Management' %}selected{% endif %}>Wealth Management</option>
+                            <option value="Corporate Law" {% if post.category == 'Corporate Law' %}selected{% endif %}>Corporate Law</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Read Time</label>
+                        <input type="text" name="read_time" required value="{{ post.read_time }}" 
+                            class="w-full bg-slate-50 border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Featured Image (Optional)</label>
+                    <div class="relative group">
+                        <input type="file" name="image" accept="image/*" 
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                        <div class="w-full border-2 border-dashed border-slate-200 rounded-2xl py-8 flex flex-col items-center justify-center bg-slate-50 group-hover:bg-slate-100 transition-colors">
+                            <span class="material-symbols-outlined text-4xl text-slate-300 mb-2">add_a_photo</span>
+                            <p class="text-sm font-bold text-slate-400">Click to change image (leave empty to keep current)</p>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 text-center italic mt-2">Current Image: {{ post.image_url }}</p>
+                </div>
+
+                <div class="pt-4 space-y-4">
+                    <button type="submit" class="w-full h-16 bg-primary text-white font-extrabold rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary-light hover:-translate-y-1 transition-all active:scale-95 flex items-center justify-center gap-3">
+                        <span class="material-symbols-outlined">save</span>
+                        Save Changes
+                    </button>
+                    
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
+                        <a href="/" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-1 order-2 md:order-1">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Website
+                        </a>
+                        
+                        <form action="/admin/delete/{{ post.id }}" method="POST" onsubmit="return confirm('Permanently delete this post?') " class="order-1 md:order-2">
+                            <button type="submit" class="text-sm font-bold text-red-400 hover:text-red-600 transition-colors flex items-center gap-1 uppercase tracking-wider">
+                                <span class="material-symbols-outlined text-sm">delete_forever</span> Delete Post
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

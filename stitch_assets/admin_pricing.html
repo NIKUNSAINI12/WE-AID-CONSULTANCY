@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Prices - We Aid Consultancy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Manrope', sans-serif; background: #f6f4f1; }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex items-center justify-between mb-12">
+            <h1 class="text-3xl font-extrabold text-[#2b4c7e]">Update <span class="text-slate-800">Plan Prices</span></h1>
+            <a href="/" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Website
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+            {% for item in pricing %}
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ item.id }}</span>
+                </div>
+                
+                <form action="/admin/pricing/update" method="POST" class="flex items-center gap-4">
+                    <input type="hidden" name="plan_id" value="{{ item.id }}">
+                    <input type="text" name="price" value="{{ item.price }}" 
+                        class="bg-slate-50 border-slate-100 rounded-xl px-4 py-2 text-sm font-black text-primary w-32 focus:ring-2 focus:ring-primary">
+                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:scale-105 transition-all">Save</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

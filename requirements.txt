@@ -2,3 +2,8 @@ fastapi
 uvicorn
 jinja2
 python-multipart
+supabase
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+itsdangerous

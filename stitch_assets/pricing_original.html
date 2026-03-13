@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -83,33 +84,21 @@
 <div class="mx-auto max-w-7xl rounded-2xl bg-white/75 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(43,76,126,0.03)]">
 <div class="flex h-16 items-center justify-between px-6">
 <div class="flex items-center gap-2">
-<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20" onclick="window.location.href='/'" style="cursor: pointer;">
+<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20">
 <span class="material-symbols-outlined">account_balance</span>
 </div>
 <h2 class="text-xl font-extrabold tracking-tight text-primary">We Aid <span class="text-secondary">Consultancy</span></h2>
 </div>
 <nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/">Home</a>
-<a class="text-sm font-bold text-primary" href="/pricing">Pricing</a>
-<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/blog">Insights</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-sm font-bold text-primary" href="#">Pricing</a>
 <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Contact</a>
 </nav>
 <div class="flex items-center gap-4">
-    {% if user %}
-    <div class="flex items-center gap-3">
-        <span class="text-sm font-bold text-slate-700">{{ user.name }}</span>
-        <a href="/logout" class="text-xs font-bold text-slate-400 hover:text-red-500">Logout</a>
-    </div>
-    {% else %}
-                    <div class="hidden md:flex items-center gap-3">
-                        <a href="/signup" class="h-10 px-6 flex items-center justify-center rounded-full border-2 border-primary text-primary text-sm font-bold hover:bg-primary/5 transition-all">
-                            Sign Up
-                        </a>
-                        <a href="/login" class="h-10 px-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-light transition-all hover:-translate-y-0.5">
-                            Sign In
-                        </a>
-                    </div>
-    {% endif %}
+<button class="hidden md:flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-light hover:shadow-xl hover:-translate-y-0.5">
+                        Get Started
+                    </button>
 </div>
 </div>
 </div>
@@ -129,14 +118,9 @@
                     Fixed-fee solutions designed for individuals, growing businesses, and international portfolios. Manage your financial responsibilities efficiently.
                 </p>
 <div class="mt-10 flex flex-wrap justify-center gap-6">
-    <button class="h-14 rounded-full bg-white px-8 text-base font-bold text-slate-700 shadow-clay-card hover:shadow-clay-card-hover hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
-        <span class="material-symbols-outlined text-primary">download</span> Download Brochure
-    </button>
-    {% if user and user.role == 'admin' %}
-    <a href="/admin/pricing" class="h-14 rounded-full bg-primary px-8 text-base font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2">
-        <span class="material-symbols-outlined">payments</span> Manage Prices
-    </a>
-    {% endif %}
+<button class="h-14 rounded-full bg-white px-8 text-base font-bold text-slate-700 shadow-clay-card hover:shadow-clay-card-hover hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">download</span> Download Brochure
+</button>
 </div>
 </div>
 </section>
@@ -172,7 +156,7 @@
 <h3 class="text-xl font-extrabold text-slate-800 mb-2">Individual</h3>
 <p class="text-slate-500 text-sm mb-6">Salaried &amp; Property Owners</p>
 <div class="mb-8">
-<span class="text-4xl font-black text-primary">{{ prices.get('tax_individual', '₹999') }}</span>
+<span class="text-4xl font-black text-primary">₹999</span>
 <span class="text-sm font-bold text-slate-400">/filing</span>
 </div>
 <ul class="space-y-4 mb-10 w-full text-left">
@@ -187,7 +171,7 @@
 <h3 class="text-xl font-extrabold text-slate-800 mb-2">Business</h3>
 <p class="text-slate-500 text-sm mb-6">SME &amp; Entrepreneurs</p>
 <div class="mb-8">
-<span class="text-4xl font-black text-primary">{{ prices.get('tax_business', '₹4,999') }}</span>
+<span class="text-4xl font-black text-primary">₹4,999</span>
 <span class="text-sm font-bold text-slate-400">/filing</span>
 </div>
 <ul class="space-y-4 mb-10 w-full text-left">
@@ -202,7 +186,7 @@
 <h3 class="text-xl font-extrabold text-slate-800 mb-2">HNI / NRI</h3>
 <p class="text-slate-500 text-sm mb-6">Global Portfolios</p>
 <div class="mb-8">
-<span class="text-4xl font-black text-primary">{{ prices.get('tax_hni', '₹9,999') }}</span>
+<span class="text-4xl font-black text-primary">₹9,999</span>
 <span class="text-sm font-bold text-slate-400">/filing</span>
 </div>
 <ul class="space-y-4 mb-10 w-full text-left">
@@ -224,7 +208,7 @@
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-lg font-extrabold text-slate-800 mb-6">Registration</h3>
 <div class="mb-6 flex items-baseline gap-1">
-<span class="text-4xl font-black text-primary">{{ prices.get('gst_reg', '₹1,499') }}</span>
+<span class="text-4xl font-black text-primary">₹1,499</span>
 <span class="text-xs font-bold text-slate-400">ONE-TIME</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">End-to-end support for new GST registration with 100% compliance guarantee.</p>
@@ -233,7 +217,7 @@
 <div class="bubble-card p-10 flex flex-col border-l-8 border-primary">
 <h3 class="text-lg font-extrabold text-slate-800 mb-6">Monthly Filing</h3>
 <div class="mb-6 flex items-baseline gap-1">
-<span class="text-4xl font-black text-primary">{{ prices.get('gst_monthly', '₹2,499') }}</span>
+<span class="text-4xl font-black text-primary">₹2,499</span>
 <span class="text-xs font-bold text-slate-400">/MONTH</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">Filing of GSTR-1, GSTR-3B and reconciliation of input tax credit (GSTR-2B).</p>
@@ -242,7 +226,7 @@
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-lg font-extrabold text-slate-800 mb-6">Annual Audit</h3>
 <div class="mb-6 flex items-baseline gap-1">
-<span class="text-4xl font-black text-primary">{{ prices.get('gst_annual', '₹7,999') }}</span>
+<span class="text-4xl font-black text-primary">₹7,999</span>
 <span class="text-xs font-bold text-slate-400">/ANNUM</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">Comprehensive GSTR-9 and GSTR-9C filing with detailed tax reconciliation reports.</p>
@@ -261,7 +245,7 @@
 <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl -mr-16 -mt-16"></div>
 <h3 class="text-xl font-extrabold mb-6">Private Limited</h3>
 <div class="mb-8">
-<span class="text-4xl font-black">{{ prices.get('startup_pvt', '₹6,999') }}</span>
+<span class="text-4xl font-black">₹6,999</span>
 <span class="text-xs font-bold text-primary-light">+ GOVT FEES</span>
 </div>
 <ul class="space-y-4 mb-10 flex-1">
@@ -273,7 +257,7 @@
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-xl font-extrabold text-slate-800 mb-6">LLP Registration</h3>
 <div class="mb-8">
-<span class="text-4xl font-black text-primary">{{ prices.get('startup_llp', '₹4,999') }}</span>
+<span class="text-4xl font-black text-primary">₹4,999</span>
 <span class="text-xs font-bold text-slate-400">+ GOVT FEES</span>
 </div>
 <ul class="space-y-4 mb-10 flex-1">
@@ -285,7 +269,7 @@
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-xl font-extrabold text-slate-800 mb-6">One Person Co.</h3>
 <div class="mb-8">
-<span class="text-4xl font-black text-primary">{{ prices.get('startup_opc', '₹5,499') }}</span>
+<span class="text-4xl font-black text-primary">₹5,499</span>
 <span class="text-xs font-bold text-slate-400">+ GOVT FEES</span>
 </div>
 <ul class="space-y-4 mb-10 flex-1">
@@ -303,7 +287,7 @@
 <div class="relative z-10">
 <h2 class="text-3xl md:text-5xl font-black text-white dark:text-slate-100 mb-8">Need Help With Tax or Compliance Matters?</h2>
 <p class="text-lg text-slate-400 dark:text-slate-400 mb-10">Connect with our senior consultants for a tailored strategy for your business or individual needs.</p>
-<button class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-2xl flex items-center gap-3 mx-auto book-btn">
+<button class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-2xl flex items-center gap-3 mx-auto">
 <span class="material-symbols-outlined">calendar_month</span>
                         Book a Consultation
                     </button>
@@ -325,11 +309,11 @@
 <span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
 <span class="material-symbols-outlined text-sm">alternate_email</span>
 </span>
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
 <span class="material-symbols-outlined text-sm">share</span>
 </span>
 </div>
 </div>
 </footer>
 </div>
-{% include 'service_modal.html' %}
 </body></html>

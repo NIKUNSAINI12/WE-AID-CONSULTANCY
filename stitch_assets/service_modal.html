@@ -1,0 +1,171 @@
+<!-- Floating Sticky Inquiry Tab -->
+<style>
+    html {
+        overflow-x: hidden;
+    }
+    body {
+        overflow-x: hidden;
+        position: relative;
+    }
+    .floating-inquiry-tab {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        transform: rotate(-90deg) translateY(-100%);
+        transform-origin: top right;
+        z-index: 55;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+    }
+    .floating-inquiry-tab:hover {
+        transform: rotate(-90deg) translateY(-110%);
+        background-color: #1a3a63;
+    }
+</style>
+
+<button onclick="openModal()" class="floating-inquiry-tab flex items-center gap-3 bg-[#2b4c7e] text-white px-8 py-4 rounded-t-3xl shadow-2xl hover:bg-[#1a3a63] border-x border-t border-white/20 whitespace-nowrap group">
+    <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">interactive_space</span>
+    <span class="font-bold tracking-wider text-sm uppercase">Consult an Expert</span>
+    <div class="absolute -top-1 -right-1 flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
+    </div>
+</button>
+
+<!-- Registration Modal Container -->
+<div id="serviceModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="relative bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl p-6 md:p-8 overflow-y-auto max-h-[90vh] border border-white">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="text-center mb-4">
+            <h2 class="text-3xl font-extrabold text-[#2b4c7e] mb-1">Service Inquiry</h2>
+            <p class="text-slate-500 text-sm">Tell us about your requirements and our experts will contact you.</p>
+        </div>
+
+        <form action="/register-service" method="POST" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Full Name</label>
+                    <input type="text" name="name" required placeholder="John Doe" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] focus:border-transparent transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
+                    <input type="text" name="phone" required placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] focus:border-transparent transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Email</label>
+                    <input type="email" name="email" required placeholder="john@company.com" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] focus:border-transparent transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Profession (Optional)</label>
+                    <input type="text" name="profession" placeholder="e.g. Business Owner" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] focus:border-transparent transition-all">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Service Required</label>
+                <select name="service_type" id="serviceSelect" onchange="toggleDescription(this.value)" required class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] transition-all">
+                    <option value="Income Tax Filing">Income Tax Filing</option>
+                    <option value="GST Registration">GST Registration</option>
+                    <option value="TDS Filing">TDS Filing</option>
+                    <option value="Accounting">Accounting</option>
+                    <option value="Startup Setup">Startup Setup</option>
+                    <option value="ROC Compliance">ROC Compliance</option>
+                    <option value="Business Advisory">Business Advisory</option>
+                    <option value="Tax Planning">Tax Planning</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <div id="descriptionGroup">
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Additional Remarks <span id="optionalLabel" class="text-[10px] lowercase font-normal opacity-60">(optional)</span></label>
+                <textarea name="description" id="descriptionField" rows="2" placeholder="Tell us more about your needs..." class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-[#2b4c7e] transition-all"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-[#2b4c7e] text-white font-bold py-4 rounded-2xl shadow-xl hover:bg-[#1a3a63] transition-all transform hover:-translate-y-1">
+                Register Interest
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openModal(serviceName = '') {
+        const modal = document.getElementById('serviceModal');
+        const select = document.getElementById('serviceSelect');
+        
+        if (serviceName && select) {
+            select.value = serviceName;
+            toggleDescription(serviceName);
+        }
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('serviceModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function toggleDescription(value) {
+        const field = document.getElementById('descriptionField');
+        const optionalLabel = document.getElementById('optionalLabel');
+        if (value === 'Others') {
+            field.required = true;
+            optionalLabel.classList.add('hidden');
+            field.placeholder = "Please specify your requirements (Required)...";
+        } else {
+            field.required = false;
+            optionalLabel.classList.remove('hidden');
+            field.placeholder = "Tell us more about your needs (Optional)...";
+        }
+    }
+
+    // Timed Welcome Popup (Lead Magnet)
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isSuccess = urlParams.get('status') === 'success';
+        const hasSeenPopup = sessionStorage.getItem('hasSeenWelcomePopup');
+
+        // Show popup after 7 seconds if it's a fresh visit and not a success redirect
+        if (!isSuccess && !hasSeenPopup) {
+            setTimeout(() => {
+                // Check if modal is already open
+                if (document.getElementById('serviceModal').classList.contains('hidden')) {
+                    const modalTitle = document.querySelector('#serviceModal h2');
+                    if (modalTitle) modalTitle.innerText = "🎁 Claim Your Free Consultation";
+                    openModal();
+                    sessionStorage.setItem('hasSeenWelcomePopup', 'true');
+                }
+            }, 7000);
+        }
+
+        if (isSuccess) {
+            alert('Thank you! Your inquiry has been received. Our experts will contact you soon.');
+        }
+
+        document.querySelectorAll('a, button').forEach(el => {
+            const text = (el.innerText || el.textContent).toLowerCase();
+            const keywords = ['get started', 'consult now', 'book consultant', 'apply now', 'incorporate now', 'start now', 'book a consultation', 'subscribe', 'book audit', 'select plan'];
+            if (keywords.some(k => text.includes(k))) {
+                el.onclick = (e) => {
+                    const isLink = el.tagName === 'A';
+                    const href = el.getAttribute('href');
+                    // Only prevent default if it's a dummy link or specifically meant for the modal
+                    if (isLink && (href === '#' || href === 'javascript:void(0)')) {
+                        e.preventDefault();
+                    }
+                    openModal();
+                };
+            }
+        });
+    });
+</script>
