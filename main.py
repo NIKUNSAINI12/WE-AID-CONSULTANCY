@@ -6,8 +6,9 @@ from starlette.middleware.sessions import SessionMiddleware
 from supabase import create_client, Client
 import os
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
+import pytz # Add if available, but we'll use standard now
 
 load_dotenv()
 
@@ -225,7 +226,9 @@ async def register_service(
     phone: str = Form(...),
     profession: str = Form(None),
     service_type: str = Form(...),
-    description: str = Form(None)
+    description: str = Form(None),
+    meeting_date: str = Form(None),
+    meeting_time: str = Form(None)
 ):
     data = {
         "name": name,
@@ -234,10 +237,19 @@ async def register_service(
         "profession": profession,
         "service_type": service_type,
         "description": description,
-        "status": "uncontacted"
+        "meeting_date": meeting_date,
+        "meeting_time": meeting_time,
+        "status": "uncontacted",
+        "created_at": datetime.now(timezone.utc).isoformat()
     }
-    supabase.table("registrations").insert(data).execute()
-    return RedirectResponse(url="/?status=success", status_code=303)
+    try:
+        supabase.table("registrations").insert(data).execute()
+        # Redirect to a permanent Google Meet room
+        # You can change this to a dynamic generator later
+        return RedirectResponse(url="https://meet.google.com/weaid-consultancy-meeting", status_code=303)
+    except Exception as e:
+        print(f"Registration Error: {e}")
+        return RedirectResponse(url="/?status=error", status_code=303)
 
 @app.get("/admin/leads", response_class=HTMLResponse)
 async def admin_leads(request: Request, filter: str = "all", response: str = "all"):
