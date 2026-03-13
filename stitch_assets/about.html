@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>About Us - We Aid Consultancy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2b4c7e",
+                        "primary-light": "#3d649f",
+                        secondary: "#cca43b",
+                        gold: "#cca43b",
+                        "gold-light": "#d4b35e",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; background-color: #f6f4f1; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .gold-gradient { background: linear-gradient(135deg, #cca43b, #b8860b); }
+    </style>
+</head>
+<body class="text-slate-800">
+    <div class="relative flex min-h-screen w-full flex-col">
+        <!-- Header -->
+        <header class="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl rounded-2xl bg-white/75 backdrop-blur-xl border border-white/50 shadow-sm">
+                <div class="flex h-16 items-center justify-between px-6">
+                    <div class="flex items-center gap-2">
+                        <a href="/" class="flex items-center gap-2">
+                            <div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20">
+                                <span class="material-symbols-outlined">account_balance</span>
+                            </div>
+                            <h2 class="text-xl font-extrabold tracking-tight text-primary">We Aid <span class="text-secondary">Consultancy</span></h2>
+                        </a>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/">Home</a>
+                        <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/pricing">Pricing</a>
+                        <a class="text-sm font-bold text-slate-700 hover:text-primary transition-colors" href="/about">About Us</a>
+                        <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/blog">Insights</a>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        {% if user %}
+                        <div class="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-full border border-slate-200">
+                            <span class="text-sm font-bold text-slate-700">{{ user.name }}</span>
+                        </div>
+                        {% if user.role == 'admin' %}
+                        <a href="/admin/leads" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-full hover:bg-primary-light transition-all shadow-md">Leads</a>
+                        {% endif %}
+                        <a href="/logout" class="text-xs font-bold text-slate-400 hover:text-red-500 transition-colors">Logout</a>
+                        {% else %}
+                        <a href="/login" class="h-10 px-6 flex items-center justify-center rounded-full bg-primary text-white text-sm font-bold hover:bg-primary-light transition-all shadow-lg shadow-primary/20">Sign In</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1">
+            <!-- Hero Section -->
+            <section class="relative py-20 overflow-hidden">
+                <div class="absolute top-0 right-0 w-1/2 h-full bg-primary/5 -skew-x-12 translate-x-1/2"></div>
+                <div class="max-w-7xl mx-auto px-6 relative">
+                    <div class="max-w-3xl">
+                        <span class="inline-block px-4 py-1.5 rounded-full bg-gold/10 text-gold text-xs font-bold uppercase tracking-widest mb-6">Our Legacy</span>
+                        <h1 class="text-5xl md:text-6xl font-extrabold text-primary mb-8 leading-tight">Empowering Businesses with <span class="bg-clip-text text-transparent gold-gradient">Strategic Financial</span> Clarity</h1>
+                        <p class="text-xl text-slate-600 leading-relaxed mb-10">We Aid Consultancy is a leading financial advisory firm dedicated to helping startups and established enterprises navigate the complexities of taxation, compliance, and strategic growth.</p>
+                        <div class="flex gap-12">
+                            <div>
+                                <div class="text-4xl font-extrabold text-primary">10+</div>
+                                <div class="text-sm font-bold text-slate-400 uppercase tracking-wider">Years Exp</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-extrabold text-primary">500+</div>
+                                <div class="text-sm font-bold text-slate-400 uppercase tracking-wider">Clients</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-extrabold text-primary">99%</div>
+                                <div class="text-sm font-bold text-slate-400 uppercase tracking-wider">Success</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <div class="glass-card p-10 rounded-[3rem] border border-slate-100 shadow-xl">
+                        <div class="size-16 rounded-2xl bg-primary flex items-center justify-center text-white mb-8 shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-3xl">rocket_launch</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-primary mb-6">Our Mission</h3>
+                        <p class="text-slate-600 leading-relaxed">To simplify financial management and regulatory compliance for every entrepreneur in India, foster growth through expert advisory, and build a transparent financial ecosystem.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-[3rem] border border-slate-100 shadow-xl">
+                        <div class="size-16 rounded-2xl bg-secondary flex items-center justify-center text-white mb-8 shadow-lg shadow-secondary/20">
+                            <span class="material-symbols-outlined text-3xl">visibility</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-primary mb-6">Our Vision</h3>
+                        <p class="text-slate-600 leading-relaxed">To be the most trusted financial partner for businesses nationwide, recognized for our commitment to integrity, innovation, and client-centric solutions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Choose Us -->
+            <section class="py-24 bg-[#f6f4f1]">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-extrabold text-primary">Why Partners Choose Us</h2>
+                        <div class="w-24 h-1.5 bg-gold mx-auto mt-4 rounded-full"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center p-8 bg-white rounded-3xl border border-slate-100 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-4">verified</span>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">Expert Compliance</h4>
+                            <p class="text-sm text-slate-500">We stay ahead of every regulatory shift so you don't have to worry about penalties or late filings.</p>
+                        </div>
+                        <div class="text-center p-8 bg-white rounded-3xl border border-slate-100 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-4">speed</span>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">Efficiency First</h4>
+                            <p class="text-sm text-slate-500">Our streamlined processes mean faster turnaround for registrations and filings, saving you precious time.</p>
+                        </div>
+                        <div class="text-center p-8 bg-white rounded-3xl border border-slate-100 shadow-sm">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-4">support_agent</span>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">Dedicated Support</h4>
+                            <p class="text-sm text-slate-500">Every client is paired with a dedicated consultant who understands their specific business nuances.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-primary py-20 text-white">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <div class="flex items-center justify-center gap-2 mb-8">
+                    <div class="flex size-10 items-center justify-center rounded-xl bg-white text-primary shadow-lg">
+                        <span class="material-symbols-outlined">account_balance</span>
+                    </div>
+                    <h2 class="text-xl font-extrabold tracking-tight">We Aid <span class="text-secondary">Consultancy</span></h2>
+                </div>
+                <p class="text-primary-light max-w-lg mx-auto mb-10 text-sm">Empowering India's growing businesses with expert financial and compliance advisory since 2014.</p>
+                <div class="flex justify-center gap-8 mb-10">
+                    <a href="/" class="text-sm text-white/60 hover:text-white">Home</a>
+                    <a href="/pricing" class="text-sm text-white/60 hover:text-white">Pricing</a>
+                    <a href="/about" class="text-sm text-white/60 hover:text-white">About Us</a>
+                    <a href="/blog" class="text-sm text-white/60 hover:text-white">Insights</a>
+                </div>
+                <div class="border-t border-white/10 pt-8 text-xs text-white/40">
+                    &copy; 2026 We Aid Consultancy. All rights reserved. Registered under ROC.
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

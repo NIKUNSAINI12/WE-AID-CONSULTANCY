@@ -122,7 +122,7 @@
 <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/">Home</a>
 <a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/pricing">Pricing</a>
 <a class="text-sm font-bold text-primary" href="/blog">Insights</a>
-<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/about">About Us</a>
 </nav>
 <div class="flex items-center gap-4">
 <div class="relative hidden lg:block">
@@ -200,10 +200,10 @@
                             </form>
                         </div>
                         {% endif %}
-                        <button class="flex items-center gap-2 text-primary font-bold group/btn">
+                        <a href="/blog/{{ hero.id }}" class="flex items-center gap-2 text-primary font-bold group/btn">
                             Read Full Article 
                             <span class="material-symbols-outlined transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -241,10 +241,10 @@
                 <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">{{ post.description }}</p>
                 <div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                     <div class="flex items-center gap-4">
-                        <button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                        <a href="/blog/{{ post.id }}" class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
                             Read More
                             <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
-                        </button>
+                        </a>
                         {% if user and user.role == 'admin' %}
                         <div class="flex items-center gap-3">
                             <a href="/admin/edit/{{ post.id }}" class="text-[10px] font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-0.5 uppercase tracking-wider">

@@ -36,6 +36,10 @@ def get_current_user(request: Request):
 async def home(request: Request):
     return templates.TemplateResponse("home_section_refined.html", {"request": request, "user": get_current_user(request)})
 
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request, "user": get_current_user(request)})
+
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
@@ -84,6 +88,18 @@ async def signup(request: Request, name: str = Form(...), email: str = Form(...)
     except Exception as e:
         print(f"Signup Error: {str(e)}")
         return HTMLResponse(content=f"Signup Error: {str(e)}", status_code=500)
+
+@app.get("/blog/{post_id}", response_class=HTMLResponse)
+async def blog_post(request: Request, post_id: str):
+    res = supabase.table("posts").select("*").eq("id", post_id).execute()
+    if not res.data:
+        raise HTTPException(status_code=404, detail="Post not found")
+    
+    return templates.TemplateResponse("blog_post.html", {
+        "request": request, 
+        "post": res.data[0], 
+        "user": get_current_user(request)
+    })
 
 @app.get("/logout")
 async def logout(request: Request):
