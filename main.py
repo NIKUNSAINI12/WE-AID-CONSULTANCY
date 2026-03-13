@@ -274,7 +274,7 @@ async def register_service(
         supabase.table("registrations").insert(data).execute()
         
         # Prepare Email Content
-        meet_link = "https://meet.google.com/weaid-consultancy-meeting"
+        meet_link = os.getenv("GMEET_LINK", "https://meet.google.com/weaid-consultancy-meeting")
         client_html = f"""
         <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
             <h2 style="color: #2b4c7e;">Consultation Confirmed!</h2>
