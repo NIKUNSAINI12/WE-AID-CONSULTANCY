@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pricing - We Aid Consultancy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4c7e", // Soft Navy
+                        "primary-light": "#567bb6",
+                        "secondary": "#cca43b", // Gold
+                        "secondary-light": "#e5c56d",
+                        "background-light": "#f6f4f1", // Warmer background
+                        "background-dark": "#101922",
+                        "clay-white": "#fffdfa", // Warmer white
+                        "clay-shadow": "#e2dbd1", // Warmer shadow
+                        "clay-highlight": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'clay-card': '8px 8px 16px #e2dbd1, -8px -8px 16px #ffffff',
+                        'clay-card-hover': '16px 16px 32px #e2dbd1, -16px -16px 32px #ffffff',
+                        'clay-inset': 'inset 6px 6px 10px #e2dbd1, inset -6px -6px 10px #ffffff',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                        'neon-glow': '0 0 20px rgba(204, 164, 59, 0.6), 0 0 60px rgba(204, 164, 59, 0.3)',
+                        'bubble': 'inset 0px 10px 15px -10px rgba(255,255,255,0.7), inset 0px -10px 15px -10px rgba(0,0,0,0.05), 0px 15px 35px -5px rgba(0,0,0,0.1)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(43, 76, 126, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(43, 76, 126, 0.6)' },
+                        }
+                    }
+                },
+            },
+        }</script>
+<style>body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f6f4f1;
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(204, 164, 59, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 0% 100%, rgba(43, 76, 126, 0.08) 0%, transparent 20%);
+            position: relative;
+        }
+        .bubble-card {
+            border-radius: 40px;
+            background: linear-gradient(145deg, #fffdfa, #f6f4f1);
+            box-shadow: inset 5px 5px 10px rgba(255,255,255,0.8), inset -5px -5px 10px rgba(0,0,0,0.03), 10px 10px 30px rgba(166, 180, 200, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .bubble-card:hover {
+            transform: translateY(-8px);
+            box-shadow: inset 5px 5px 10px rgba(255,255,255,0.8), inset -5px -5px 10px rgba(0,0,0,0.03), 15px 15px 40px rgba(166, 180, 200, 0.4);
+        }
+        .neumorphic-inset {
+            background: #f6f4f1;
+            box-shadow: inset 6px 6px 12px #e2dbd1, inset -6px -6px 12px #ffffff;
+        }</style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl rounded-2xl bg-white/75 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(43,76,126,0.03)]">
+<div class="flex h-16 items-center justify-between px-6">
+<div class="flex items-center gap-2">
+<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tight text-primary">We Aid <span class="text-secondary">Consultancy</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/">Home</a>
+<a class="text-sm font-bold text-primary" href="/pricing">Pricing</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/blog">Insights</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-light hover:shadow-xl hover:-translate-y-0.5">
+                        Get Started
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="relative pt-12 lg:pt-20 pb-16 overflow-hidden">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+<div class="mb-6 inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-bold text-primary shadow-clay-card ring-1 ring-white/60 backdrop-blur-sm">
+<span class="mr-2 h-2 w-2 rounded-full bg-secondary shadow-[0_0_10px_#cca43b] animate-pulse"></span>
+                            Transparent Pricing Plans
+                        </div>
+<h1 class="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl mb-6 leading-tight">
+                    Professional Tax &amp; <br/><span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">Compliance</span> Plans
+                </h1>
+<p class="mt-4 text-lg leading-8 text-slate-600 max-w-2xl mx-auto">
+                    Fixed-fee solutions designed for individuals, growing businesses, and international portfolios. Manage your financial responsibilities efficiently.
+                </p>
+<div class="mt-10 flex flex-wrap justify-center gap-6">
+<button class="h-14 rounded-full bg-white px-8 text-base font-bold text-slate-700 shadow-clay-card hover:shadow-clay-card-hover hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">download</span> Download Brochure
+</button>
+</div>
+</div>
+</section>
+<!-- Consultation Banner -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+<div class="neumorphic-inset rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-white rounded-2xl shadow-clay-card text-secondary">
+<span class="material-symbols-outlined text-3xl">schedule</span>
+</div>
+<div>
+<h4 class="text-lg font-extrabold text-slate-800">Consultation Hours</h4>
+<p class="text-slate-500 font-bold text-sm uppercase tracking-wider">Monday – Saturday | 9:00 AM – 9:00 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-clay-card">
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</span>
+<span class="text-slate-700 font-bold text-sm">Available Now for Consultation</span>
+</div>
+</div>
+</div>
+<!-- Section 1: Income Tax -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+<div class="mb-12 text-center">
+<h2 class="text-base font-bold uppercase tracking-widest text-secondary">Income Tax</h2>
+<p class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Return Filing Plans</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bubble-card p-10 flex flex-col items-center text-center">
+<h3 class="text-xl font-extrabold text-slate-800 mb-2">Individual</h3>
+<p class="text-slate-500 text-sm mb-6">Salaried &amp; Property Owners</p>
+<div class="mb-8">
+<span class="text-4xl font-black text-primary">₹999</span>
+<span class="text-sm font-bold text-slate-400">/filing</span>
+</div>
+<ul class="space-y-4 mb-10 w-full text-left">
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Salaried &amp; Form 16</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Single House property</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Basic planning session</li>
+</ul>
+<button class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
+</div>
+<div class="bubble-card p-10 flex flex-col items-center text-center border-2 border-primary ring-4 ring-primary/5">
+<div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest">Popular</div>
+<h3 class="text-xl font-extrabold text-slate-800 mb-2">Business</h3>
+<p class="text-slate-500 text-sm mb-6">SME &amp; Entrepreneurs</p>
+<div class="mb-8">
+<span class="text-4xl font-black text-primary">₹4,999</span>
+<span class="text-sm font-bold text-slate-400">/filing</span>
+</div>
+<ul class="space-y-4 mb-10 w-full text-left">
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Audit &amp; Non-Audit</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Balance Sheet prep</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> TDS compliance check</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Presumptive (44AD)</li>
+</ul>
+<button class="w-full h-14 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/30 hover:-translate-y-1 transition-all">Get Started</button>
+</div>
+<div class="bubble-card p-10 flex flex-col items-center text-center">
+<h3 class="text-xl font-extrabold text-slate-800 mb-2">HNI / NRI</h3>
+<p class="text-slate-500 text-sm mb-6">Global Portfolios</p>
+<div class="mb-8">
+<span class="text-4xl font-black text-primary">₹9,999</span>
+<span class="text-sm font-bold text-slate-400">/filing</span>
+</div>
+<ul class="space-y-4 mb-10 w-full text-left">
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Global income &amp; DTAA</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Multiple Capital gains</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Estate &amp; Wealth</li>
+</ul>
+<button class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
+</div>
+</div>
+</section>
+<!-- Section 2: GST Services -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+<div class="mb-12 text-center">
+<h2 class="text-base font-bold uppercase tracking-widest text-secondary">GST Services</h2>
+<p class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Compliance &amp; Audits</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bubble-card p-10 flex flex-col">
+<h3 class="text-lg font-extrabold text-slate-800 mb-6">Registration</h3>
+<div class="mb-6 flex items-baseline gap-1">
+<span class="text-4xl font-black text-primary">₹1,499</span>
+<span class="text-xs font-bold text-slate-400">ONE-TIME</span>
+</div>
+<p class="text-sm text-slate-600 mb-10 leading-relaxed">End-to-end support for new GST registration with 100% compliance guarantee.</p>
+<button class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Apply Now</button>
+</div>
+<div class="bubble-card p-10 flex flex-col border-l-8 border-primary">
+<h3 class="text-lg font-extrabold text-slate-800 mb-6">Monthly Filing</h3>
+<div class="mb-6 flex items-baseline gap-1">
+<span class="text-4xl font-black text-primary">₹2,499</span>
+<span class="text-xs font-bold text-slate-400">/MONTH</span>
+</div>
+<p class="text-sm text-slate-600 mb-10 leading-relaxed">Filing of GSTR-1, GSTR-3B and reconciliation of input tax credit (GSTR-2B).</p>
+<button class="mt-auto h-12 rounded-xl bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:bg-primary-light transition-all">Subscribe</button>
+</div>
+<div class="bubble-card p-10 flex flex-col">
+<h3 class="text-lg font-extrabold text-slate-800 mb-6">Annual Audit</h3>
+<div class="mb-6 flex items-baseline gap-1">
+<span class="text-4xl font-black text-primary">₹7,999</span>
+<span class="text-xs font-bold text-slate-400">/ANNUM</span>
+</div>
+<p class="text-sm text-slate-600 mb-10 leading-relaxed">Comprehensive GSTR-9 and GSTR-9C filing with detailed tax reconciliation reports.</p>
+<button class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Book Audit</button>
+</div>
+</div>
+</section>
+<!-- Section 3: Startup Registration -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+<div class="mb-12 text-center">
+<h2 class="text-base font-bold uppercase tracking-widest text-secondary">Startup</h2>
+<p class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Registration Packages</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-primary rounded-[2.5rem] p-10 text-white flex flex-col relative overflow-hidden shadow-2xl">
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl -mr-16 -mt-16"></div>
+<h3 class="text-xl font-extrabold mb-6">Private Limited</h3>
+<div class="mb-8">
+<span class="text-4xl font-black">₹6,999</span>
+<span class="text-xs font-bold text-primary-light">+ GOVT FEES</span>
+</div>
+<ul class="space-y-4 mb-10 flex-1">
+<li class="flex items-center gap-3 text-sm font-medium"><span class="material-symbols-outlined">verified</span> 2 DIN &amp; DSC included</li>
+<li class="flex items-center gap-3 text-sm font-medium"><span class="material-symbols-outlined">verified</span> PAN &amp; TAN Processing</li>
+</ul>
+<button class="h-14 rounded-2xl bg-white text-primary font-bold hover:scale-105 transition-all">Incorporate Now</button>
+</div>
+<div class="bubble-card p-10 flex flex-col">
+<h3 class="text-xl font-extrabold text-slate-800 mb-6">LLP Registration</h3>
+<div class="mb-8">
+<span class="text-4xl font-black text-primary">₹4,999</span>
+<span class="text-xs font-bold text-slate-400">+ GOVT FEES</span>
+</div>
+<ul class="space-y-4 mb-10 flex-1">
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Partnership Deed drafting</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> RoC Compliance setup</li>
+</ul>
+<button class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Start Now</button>
+</div>
+<div class="bubble-card p-10 flex flex-col">
+<h3 class="text-xl font-extrabold text-slate-800 mb-6">One Person Co.</h3>
+<div class="mb-8">
+<span class="text-4xl font-black text-primary">₹5,499</span>
+<span class="text-xs font-bold text-slate-400">+ GOVT FEES</span>
+</div>
+<ul class="space-y-4 mb-10 flex-1">
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Single Director setup</li>
+<li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Corporate seal &amp; stationery</li>
+</ul>
+<button class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Select Plan</button>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="max-w-5xl mx-auto px-6 mb-24 text-center">
+<div class="bg-slate-900 dark:bg-primary/10 rounded-[2rem] p-12 md:p-20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<div class="relative z-10">
+<h2 class="text-3xl md:text-5xl font-black text-white dark:text-slate-100 mb-8">Need Help With Tax or Compliance Matters?</h2>
+<p class="text-lg text-slate-400 dark:text-slate-400 mb-10">Connect with our senior consultants for a tailored strategy for your business or individual needs.</p>
+<button class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-2xl flex items-center gap-3 mx-auto">
+<span class="material-symbols-outlined">calendar_month</span>
+                        Book a Consultation
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-slate-200 bg-clay-white py-12 px-4 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined text-sm">account_balance</span>
+</div>
+<span class="font-bold text-slate-900 text-lg">We Aid Consultancy</span>
+</div>
+<p class="text-xs text-slate-400">© 2026 We Aid Consultancy. All Rights Reserved.</p>
+<div class="flex gap-4">
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</span>
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

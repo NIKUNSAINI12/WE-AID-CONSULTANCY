@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights &amp; updates - We Aid Consultancy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4c7e", // Soft Navy
+                        "primary-light": "#567bb6",
+                        "secondary": "#cca43b", // Gold
+                        "secondary-light": "#e5c56d",
+                        "background-light": "#f6f4f1", // Warmer background
+                        "background-dark": "#101922",
+                        "clay-white": "#fffdfa", // Warmer white
+                        "clay-shadow": "#e2dbd1", // Warmer shadow
+                        "clay-highlight": "#ffffff",
+                        "gold": "#cca43b",
+                        "gold-light": "#e5c56d",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'clay-card': '8px 8px 16px #e2dbd1, -8px -8px 16px #ffffff',
+                        'clay-card-hover': '16px 16px 32px #e2dbd1, -16px -16px 32px #ffffff',
+                        'clay-inset': 'inset 6px 6px 10px #e2dbd1, inset -6px -6px 10px #ffffff',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                        'neon-glow': '0 0 20px rgba(204, 164, 59, 0.6), 0 0 60px rgba(204, 164, 59, 0.3)',
+                        'bubble': 'inset 0px 10px 15px -10px rgba(255,255,255,0.7), inset 0px -10px 15px -10px rgba(0,0,0,0.05), 0px 15px 35px -5px rgba(0,0,0,0.1)',
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f6f4f1;
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(204, 164, 59, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 0% 100%, rgba(43, 76, 126, 0.08) 0%, transparent 20%);
+            position: relative;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(43, 76, 126, 0.08);
+        }
+        .dark .glass-card {
+            background: rgba(16, 25, 34, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        }
+        .premium-shadow {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative min-h-screen flex flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl rounded-2xl bg-white/75 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(43,76,126,0.03)]">
+<div class="flex h-16 items-center justify-between px-6">
+<div class="flex items-center gap-2">
+<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20" title="We Aid Consultancy">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tight text-primary">We Aid <span class="text-secondary">Consultancy</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/">Home</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/pricing">Pricing</a>
+<a class="text-sm font-bold text-primary" href="/blog">Insights</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100/50 dark:bg-slate-800 border border-slate-200/50 rounded-full text-sm focus:ring-2 focus:ring-primary w-48 transition-all focus:w-64" placeholder="Search..." type="text"/>
+</div>
+<button class="hidden md:flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-light hover:shadow-xl hover:-translate-y-0.5">
+                        Get Started
+                    </button>
+<button class="flex md:hidden p-2 text-slate-600 rounded-lg hover:bg-slate-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12">
+<!-- Page Header -->
+<div class="mb-12">
+<h2 class="text-4xl font-extrabold mb-4 tracking-tight">Expert <span class="bg-clip-text text-transparent gold-gradient">Financial Insights</span></h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl text-lg">Stay ahead with the latest regulatory updates, tax strategies, and business growth tips curated by our professional consultants.</p>
+</div>
+<!-- Featured Post -->
+<section class="mb-16">
+<div class="relative group cursor-pointer overflow-hidden rounded-3xl glass-card premium-shadow flex flex-col lg:flex-row items-stretch border border-gold/20">
+<div class="lg:w-3/5 h-[400px] overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="3D workspace with laptop and gold financial charts" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6pjcUa97bPwuFLxtnTFUS-5o2YQBJKJG_vOQPe6tLljH4Jx1bZKa-6_CZ2W3cIsXUuoxkIpgv_CHXAtdGcWpZjLjkb0L8vaZFbjsQr-XQE7mNqkZd3Y_dR7Np8CrJKVRmU6EVrg82PhvIlRXP9tLYuYG61kYIaXywOtwi4jlLUc0R24z0K4cUIDieyBbF3c10PyGJ7OlHx5QKj43XChfRv4x8me0egu69O_5L5WXv43a2olTIHekKagug-iQW5q157P3B9NtYphQ')">
+</div>
+</div>
+<div class="lg:w-2/5 p-8 lg:p-12 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-6">
+<span class="px-3 py-1 bg-gold/10 text-gold text-xs font-bold rounded-full uppercase tracking-widest border border-gold/20">Featured</span>
+<span class="text-slate-400 text-xs font-medium">12 Min Read</span>
+</div>
+<h3 class="text-3xl font-bold mb-6 leading-tight group-hover:text-primary transition-colors">Navigating Global Taxation in the Digital Age: 2024 Blueprint</h3>
+<p class="text-slate-600 dark:text-slate-400 mb-8 text-lg">Comprehensive guide on how multinational entities are adapting to the new OECD Pillar Two requirements and what it means for your scale-up.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200" data-alt="Portrait of financial consultant" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0SFT7ZE1gka3TZr0Jjb6r0YsKLblTCHxrrHfVveGaiXJF5zw7D3_necJZQQS7RBq97rIcwffPPnYmJJpe2APnf2jwiI836iimN-HJcGpz5eN-ah-J-0mLDONcQFYaBiyNuor7-XRsHNeHalnI6jxYlmFPs6JFuvsXCd71JZabW68v7p_CuTFQUlCat851cH6vaQXx-LT8QnxV7VDjZPcxglLwWd4kR6udqmA-rYd5JMKXa9LbJPdLV1loizNLBqRZ4gudfE7vC7w')"></div>
+<div>
+<p class="text-sm font-bold">Sarah Jenkins</p>
+<p class="text-xs text-slate-400">Senior Tax Strategist</p>
+</div>
+</div>
+<button class="flex items-center gap-2 text-primary font-bold group/btn">
+                                Read Full Article 
+                                <span class="material-symbols-outlined transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Filter -->
+<div class="flex flex-wrap items-center gap-4 mb-12">
+<button class="px-6 py-2 rounded-full bg-primary text-white font-bold text-sm shadow-md shadow-primary/20">All Topics</button>
+<button class="px-6 py-2 rounded-full glass-card hover:border-gold/50 text-sm font-semibold transition-all">Income Tax</button>
+<button class="px-6 py-2 rounded-full glass-card hover:border-gold/50 text-sm font-semibold transition-all">GST Updates</button>
+<button class="px-6 py-2 rounded-full glass-card hover:border-gold/50 text-sm font-semibold transition-all">Startup Tips</button>
+<button class="px-6 py-2 rounded-full glass-card hover:border-gold/50 text-sm font-semibold transition-all">Wealth Management</button>
+<button class="px-6 py-2 rounded-full glass-card hover:border-gold/50 text-sm font-semibold transition-all">Corporate Law</button>
+</div>
+<!-- Articles Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<article class="group glass-card rounded-2xl overflow-hidden border border-white/20 hover:border-gold/30 transition-all flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="3D gold coins stacked on a digital surface" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuARIalV5pQ0OEsAcBCn-DKV5rSqVQvo16WbaIPTrDkKNfm5eV7CdRZ2hvX5ZDaxnz10Hmi3Fw4tGoRQo9FJtkWSp9rKNXajcS4JU6jrhUPB5fK2sOEDcqVWDnOAypG_uw8R2k-x4zZDf9YodLyra9dxYe6M2iMgkOLBX3CMm5qdroKJXC3qSHqT3SG-WqiiXifVLejDEANjBG0jhtAx-_t1I_JM0N2W3OkzJ6QjiQmsUg6MIykqUl7zhrCAlVLgn3ZCoBuuNNlCOKA')">
+</div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-primary">Income Tax</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase mb-3">
+<span>Mar 15, 2024</span>
+<span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+<span>5 min read</span>
+</div>
+<h4 class="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">Maximizing Deductions: A Guide for High Net-Worth Individuals</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">Learn the legal frameworks and recent policy shifts that allow for strategic tax optimization before the fiscal year ends.</p>
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                                Read More
+                                <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="group glass-card rounded-2xl overflow-hidden border border-white/20 hover:border-gold/30 transition-all flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="3D abstract financial data visualization in blue and gold" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBc-aK2XInbGsuL5q4_rRxk2Yhpnx_r0C8rtjXDhS0EVxzXwKLqA8eTb8qUT6km08MKtgOIBW1VLx9kRTkv-IxWDr5dlrTWZYbsIfBw48BgGuxbvvCqnKGaLmGWkC_Y-Ai70h8LcAeTVKAqsV9Ft07RybOgbBTk6DApQvpb8hAq36DVbR0bHqhaaSkcgiJaa2wn-DvX0a8p0Xzz51zkfiLe9H3q11fEIV8oBOfMQXaD8XmbbG5NKPNC4clMqqM6ypqtS79VI264DYw')">
+</div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-primary">GST Updates</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase mb-3">
+<span>Mar 12, 2024</span>
+<span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+<span>8 min read</span>
+</div>
+<h4 class="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">New GST Compliance Framework for E-commerce Platforms</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">Essential updates for online sellers regarding the simplified filing system and automated reconciliation tools.</p>
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                                Read More
+                                <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="group glass-card rounded-2xl overflow-hidden border border-white/20 hover:border-gold/30 transition-all flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Modern 3D office interior with gold accents" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2BrK0TThjVVPkYHekPWdfVTgR6bGKbK3xT64tG9u22zpQU03GKiMP22gsD9GXeJ5aRJ49YJ15-zYzTXosy-1UGAlqTtMfZS-8CCQydEcTkhVFl2mRU7rQ3ywcabY00EWL7uuGOLWd2nIgfpyFzJLNJmWusoFCPHQHcwd-9Yp53HKTlbyEDUUkPtweKrQiinrrrBpvw-4t1fJ4j0IFbAL1uD9bTHsMpvo6Dv9MoonSQRbmi4890f4Q8VRq5qYpc7AFxN1XTEEDl2w')">
+</div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-primary">Startup Tips</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase mb-3">
+<span>Mar 10, 2024</span>
+<span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+<span>10 min read</span>
+</div>
+<h4 class="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">From Seed to Series A: Financial Structuring for Scalability</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">The foundational financial decisions every founder must make to ensure clean cap tables and attractive investor reports.</p>
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                                Read More
+                                <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="group glass-card rounded-2xl overflow-hidden border border-white/20 hover:border-gold/30 transition-all flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="3D pen signing a gold digital contract" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTm_FPesM8blpZVxJf1pGO14S4d6xTlmRDAZC78spfjA0Wb2BwnEyBKPOHL3ArACPKQdBAzS2uV4UeU_coH10VaSiEEX4CbWH1C3bFoT9ZZXg32xNeU8NP_f3-a1nN-jPxilybu1c_r0pDBuPhzVGUdXsqdYXP8UETDtQZE_yVNmHydWrhg_QkCwKgBOiqk3by6QuwmnyMgtnyYuQA2bhv3QV9y3ZVF1BUFU2ZE7EsmAFuA4rr8GaeLnvtYK9_-wMYMEQakeRO7Js')">
+</div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-primary">Corporate Law</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase mb-3">
+<span>Mar 08, 2024</span>
+<span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+<span>6 min read</span>
+</div>
+<h4 class="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">Understanding Recent Amendments in the Companies Act</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">A breakdown of the new disclosure norms and what corporate boards need to implement by the next quarter.</p>
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                                Read More
+                                <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="group glass-card rounded-2xl overflow-hidden border border-white/20 hover:border-gold/30 transition-all flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="3D glowing dollar sign in glass case" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgY0yt5sAM2JvFCKpVwbTVK37gOSYBZx1R6fEoEjmtqR7By6PwhZlSbdF4l5dQqGdZcS-ElgfLHoOonE0GsafBW9lRzqGpJi52OqyCnIiopDV4a7tF8GntW9WBOSrrmdZErwhctb-Fh8eFMrDkKUqs5Ai3T2rgIJ1g14eLx0RzidIGhjd_cU59-B_0YGGpcEaJ7C4FuNvEwVnhketdhufe29cdA-t6nMYNEWyzQ6GLwhB1-IDmH2b8_dKIV4R5C_MkViJLR30dIqU')">
+</div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider text-primary">Wealth Management</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<div class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase mb-3">
+<span>Mar 05, 2024</span>
+<span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+<span>7 min read</span>
+</div>
+<h4 class="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">Legacy Planning: Essential Steps for Family Offices</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-3">How to structure family trusts and multi-generational assets to minimize inheritance taxes and ensure smooth transition.</p>
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<button class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1 group/more">
+                                Read More
+                                <span class="material-symbols-outlined text-lg transition-transform group-hover/more:translate-x-1">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Newsletter Card -->
+<div class="bg-gradient-to-br from-slate-900 to-primary rounded-2xl p-8 flex flex-col justify-center text-white relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-20">
+<span class="material-symbols-outlined text-[180px]">mail</span>
+</div>
+<div class="relative z-10">
+<h4 class="text-2xl font-bold mb-4">Get the latest insights delivered</h4>
+<p class="text-slate-300 mb-8 text-sm">Join 5,000+ professionals who receive our weekly briefing on financial regulations and market shifts.</p>
+<form class="space-y-4">
+<input class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gold outline-none placeholder:text-slate-400" placeholder="Your work email" type="email"/>
+<button class="w-full bg-gold hover:bg-gold-light hover:text-slate-900 transition-colors text-slate-900 font-bold py-3 rounded-xl shadow-lg">Subscribe Now</button>
+</form>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-16 flex items-center justify-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-bold">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-bold">3</button>
+<span class="mx-2 text-slate-400">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-bold">12</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-slate-200 bg-clay-white py-12 mt-20">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-4">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined text-sm">account_balance</span>
+</div>
+<span class="font-bold text-slate-900 text-lg">We Aid Consultancy</span>
+</div>
+<p class="text-sm text-slate-500">Providing professional services in taxation, compliance, and financial advisory for individuals and businesses.</p>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Company</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">About</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Resources</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Newsletter</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Events</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Legal</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Licenses</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 border-t border-slate-100 pt-8 flex justify-between items-center">
+<p class="text-xs text-slate-400">© 2026 We Aid Consultancy. All Rights Reserved.</p>
+<div class="flex gap-4">
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</span>
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

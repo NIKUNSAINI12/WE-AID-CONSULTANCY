@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WeaidConsultancy - Interactive Financial Future</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4c7e", // Soft Navy
+                        "primary-light": "#567bb6",
+                        "secondary": "#cca43b", // Gold
+                        "secondary-light": "#e5c56d",
+                        "background-light": "#f6f4f1", // Warmer background
+                        "background-dark": "#101922",
+                        "clay-white": "#fffdfa", // Warmer white
+                        "clay-shadow": "#e2dbd1", // Warmer shadow
+                        "clay-highlight": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'clay-card': '8px 8px 16px #e2dbd1, -8px -8px 16px #ffffff',
+                        'clay-card-hover': '16px 16px 32px #e2dbd1, -16px -16px 32px #ffffff',
+                        'clay-inset': 'inset 6px 6px 10px #e2dbd1, inset -6px -6px 10px #ffffff',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                        'neon-glow': '0 0 20px rgba(204, 164, 59, 0.6), 0 0 60px rgba(204, 164, 59, 0.3)',
+                        'bubble': 'inset 0px 10px 15px -10px rgba(255,255,255,0.7), inset 0px -10px 15px -10px rgba(0,0,0,0.05), 0px 15px 35px -5px rgba(0,0,0,0.1)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'float-slow': 'float 8s ease-in-out 1s infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'grow-bar': 'grow-bar 2s ease-out forwards',
+                        'coin-rotate': 'coin-rotate 4s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(43, 76, 126, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(43, 76, 126, 0.6)' },
+                        },
+                        'grow-bar': {
+                            '0%': { height: '0%' },
+                            '100%': { height: 'var(--target-height)' },
+                        },
+                        'coin-rotate': {
+                            '0%': { transform: 'rotateY(0deg) translateY(0)' },
+                            '100%': { transform: 'rotateY(180deg) translateY(-10px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f6f4f1;
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(204, 164, 59, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 0% 100%, rgba(43, 76, 126, 0.08) 0%, transparent 20%);
+            position: relative;
+        }body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .testimonial-carousel {
+            scrollbar-width: none;
+        }
+        .testimonial-carousel::-webkit-scrollbar {
+            display: none;
+        }
+        .tilt-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .tilt-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 20px 20px 60px #e2dbd1, -20px -20px 60px #ffffff;
+        }
+        .tilt-card .icon-pop {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform: translateZ(0);
+        }
+        .tilt-card:hover .icon-pop {
+            transform: translateZ(50px) scale(1.1);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1), inset 6px 6px 10px #e2dbd1, inset -6px -6px 10px #ffffff;
+        }
+        .coin-3d {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            box-shadow: 
+                inset 0 0 10px rgba(255, 255, 255, 0.8),
+                inset 0 0 2px rgba(0, 0, 0, 0.5),
+                5px 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+        .coin-3d::before {
+            content: '$';
+            font-weight: 800;
+            color: #b8860b;
+            font-size: 32px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+        .glass-chart {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        .bubble-card {
+            border-radius: 40px;
+            background: linear-gradient(145deg, #fffdfa, #f6f4f1);
+            box-shadow: inset 5px 5px 10px rgba(255,255,255,0.8), inset -5px -5px 10px rgba(0,0,0,0.03), 10px 10px 30px rgba(166, 180, 200, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .bubble-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80%;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0));
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .bubble-card:hover {
+            transform: translateY(-8px);
+            box-shadow: inset 5px 5px 10px rgba(255,255,255,0.8), inset -5px -5px 10px rgba(0,0,0,0.03), 15px 15px 40px rgba(166, 180, 200, 0.4);
+        }
+        @property --bar-height {
+            syntax: '<percentage>';
+            inherits: false;
+            initial-value: 0%;
+        }
+        .chart-bar-3d {
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(20deg);
+        }
+        .chart-face {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: currentColor;
+            opacity: 0.8;
+            transform-origin: bottom;
+            transition: height 1s ease-out;
+        }
+        .chart-face.front { transform: translateZ(20px); }
+        .chart-face.back { transform: translateZ(-20px); }
+        .chart-face.right { 
+            width: 40px; 
+            right: 0; 
+            transform: rotateY(90deg) translateZ(20px); 
+            filter: brightness(0.85);
+        }
+        .chart-face.left { 
+            width: 40px; 
+            left: 0; 
+            transform: rotateY(-90deg) translateZ(20px); 
+            filter: brightness(0.85);
+        }
+        .chart-face.top {
+            height: 40px;
+            top: 0;
+            transform: rotateX(90deg) translateZ(20px);
+            filter: brightness(1.15);
+        }
+        .glowing-sphere {
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(204, 164, 59, 1));
+            box-shadow: 0 0 60px rgba(204, 164, 59, 0.35), inset -10px -10px 40px rgba(0,0,0,0.15);
+            animation: pulse-sphere 4s infinite ease-in-out;
+        }
+        @keyframes pulse-sphere {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.1); box-shadow: 0 0 80px rgba(204, 164, 59, 0.5), inset -10px -10px 40px rgba(0,0,0,0.15); }
+        }
+        .neumorphic-inset {
+            background: #f6f4f1;
+            box-shadow: inset 6px 6px 12px #e2dbd1, inset -6px -6px 12px #ffffff;
+        }
+    </style>
+</head>
+<body class="text-slate-800 transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl rounded-2xl bg-white/75 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(43,76,126,0.03)]">
+<div class="flex h-16 items-center justify-between px-6">
+<div class="flex items-center gap-2">
+<div class="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-light to-primary text-white shadow-lg shadow-primary/20" title="We Aid Consultancy">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tight text-primary">We Aid <span class="text-secondary">Consultancy</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-bold text-slate-700 hover:text-primary transition-colors" href="/">Home</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/pricing">Pricing</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="/blog">Insights</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-light hover:shadow-xl hover:-translate-y-0.5">
+                        Get Started
+                    </button>
+<button class="flex md:hidden p-2 text-slate-600 rounded-lg hover:bg-slate-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<section class="relative pt-12 lg:pt-20 pb-16 overflow-hidden perspective-1000">
+<div class="absolute top-20 right-[10%] w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10 animate-pulse-glow"></div>
+<div class="absolute bottom-20 left-[5%] w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 gap-y-12 lg:grid-cols-2 lg:gap-x-16 lg:items-center">
+<div class="max-w-2xl z-10 relative">
+<div class="absolute -top-10 -left-10 w-12 h-12 rounded-full bg-gradient-to-br from-secondary/20 to-transparent blur-md animate-float"></div>
+<div class="mb-6 inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-bold text-primary shadow-clay-card ring-1 ring-white/60 backdrop-blur-sm">
+<span class="mr-2 h-2 w-2 rounded-full bg-secondary shadow-[0_0_10px_#cca43b] animate-pulse"></span>
+                            Premier Financial Planning
+                        </div>
+<h1 class="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl mb-6 leading-tight">We Aid <br/><span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light drop-shadow-sm">Consultancy</span></h1><p class="text-xl font-bold text-secondary mb-2 italic">Your Reliable Partner for Taxation and Compliance</p>
+<p class="mt-4 text-lg leading-8 text-slate-600 max-w-lg">Professional solutions for Income Tax, GST, Accounting, Startup Registration, ROC Compliances and Legal Advisory. We assist individuals, professionals, and businesses in managing their financial and regulatory responsibilities efficiently and accurately.</p>
+<div class="mb-6 flex items-center gap-2 text-sm font-semibold text-slate-500 bg-white/50 backdrop-blur-sm w-fit px-4 py-2 rounded-lg border border-white/80">
+<span class="material-symbols-outlined text-secondary text-base">schedule</span>
+    Monday – Saturday | 9:00 AM – 9:00 PM
+</div><div class="mt-10 flex flex-wrap items-center gap-6">
+<button class="h-14 rounded-full bg-primary px-8 text-base font-bold text-white shadow-[6px_6px_12px_#e2dbd1,-6px_-6px_12px_#ffffff] hover:shadow-[8px_8px_16px_#e2dbd1,-8px_-8px_16px_#ffffff] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+<span class="relative z-10">Book a Free Consultation</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+<a class="group h-14 px-6 flex items-center gap-2 text-sm font-bold text-slate-700 rounded-full bg-background-light shadow-clay-card hover:text-primary transition-all duration-300" href="/pricing">Explore Our Services <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span></a>
+</div>
+<div class="mt-12 pt-8">
+<p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Trusted by industry leaders</p>
+<div class="flex gap-8 opacity-40 grayscale transition-all hover:grayscale-0 hover:opacity-100">
+<div class="flex items-center gap-2 font-extrabold text-xl text-slate-500"><span class="material-symbols-outlined filled">verified_user</span> CorpSecure</div>
+<div class="flex items-center gap-2 font-extrabold text-xl text-slate-500"><span class="material-symbols-outlined filled">account_balance_wallet</span> WealthInc</div>
+<div class="flex items-center gap-2 font-extrabold text-xl text-slate-500"><span class="material-symbols-outlined filled">trending_up</span> GrowthFund</div>
+</div>
+</div>
+</div>
+<div class="relative lg:col-span-1 h-[600px] flex items-center justify-center perspective-1000 group">
+<div class="relative w-80 h-80 transform rotate-x-[60deg] rotate-z-[-45deg] preserve-3d transition-transform duration-700 ease-out group-hover:rotate-x-[55deg] group-hover:rotate-z-[-40deg]">
+<div class="absolute inset-0 bg-white rounded-3xl shadow-[20px_20px_60px_#e2dbd1,-20px_-20px_60px_#ffffff] flex items-center justify-center transform translate-z-[-40px]">
+<div class="w-64 h-64 rounded-full border-4 border-dashed border-slate-100/60 animate-[spin-slow_20s_linear_infinite]"></div>
+</div>
+<div class="absolute top-0 right-0 w-64 h-48 bg-white p-3 rounded-2xl shadow-xl transform translate-z-[40px] translate-x-[20px] translate-y-[-40px] animate-[float_6s_ease-in-out_infinite]">
+<div class="w-full h-full rounded-xl overflow-hidden relative border border-slate-50">
+<img alt="Meeting" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwxiEPYLihlhtGklHODxlqKYuVz-mg_vL8y6owp7pluXWkYjrAAFjoQBH1zPBSRQBPIWFa3G3HxeTcSfESFhhV_Wsd8pmo4_GkD2QzR7Uca3wf1JKSHhlgz-CeWxvp59r9FBGuR0giQDSMolAoy1flah3Z8TqDDiLrKw8bDveYWWzsnESyOg4HFN6mJZ8J2DaWh2fVIk4Z4ZK5AHzNnNJxY5q3iNbmM3pmM6ZYxrd2NRnLm2VT29TUoV_lSljuYAt0pi4bTWhvXJ4"/>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+<div class="h-2 w-20 bg-secondary rounded-full mb-1"></div>
+<div class="h-2 w-12 bg-white/40 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute top-[-20px] left-[-20px] w-40 h-32 glass-chart rounded-xl transform translate-z-[100px] animate-[float-delayed_5s_ease-in-out_infinite] flex items-end justify-around p-4 pb-0 overflow-hidden group-hover:translate-z-[120px] transition-transform duration-500">
+<div class="w-6 bg-secondary/80 rounded-t-sm h-[40%] animate-[grow-bar_2s_ease-out_infinite_alternate]" style="--target-height: 40%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm h-[70%] animate-[grow-bar_2s_ease-out_infinite_alternate_0.5s]" style="--target-height: 70%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm h-[50%] animate-[grow-bar_2s_ease-out_infinite_alternate_1s]" style="--target-height: 50%"></div>
+<div class="w-6 bg-primary/80 rounded-t-sm h-[90%] animate-[grow-bar_2s_ease-out_infinite_alternate_1.5s]" style="--target-height: 90%"></div>
+</div>
+<div class="absolute top-[-40px] right-[-20px] coin-3d animate-coin-rotate translate-z-[150px]"></div>
+<div class="absolute bottom-[-10px] left-[-30px] coin-3d animate-coin-rotate translate-z-[120px] scale-75" style="animation-delay: 1s;"></div>
+<div class="absolute bottom-10 left-10 w-24 h-24 bg-gradient-to-br from-primary to-primary-light rounded-2xl shadow-2xl flex items-center justify-center transform translate-z-[80px] animate-[float_5s_ease-in-out_infinite_1s] border border-white/30 backdrop-blur-sm">
+<span class="material-symbols-outlined text-4xl text-white">security</span>
+</div>
+<div class="absolute top-1/2 left-[-60px] bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center gap-3 transform translate-z-[140px] animate-[float_7s_ease-in-out_infinite_0.5s] border border-white/60">
+<div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 shadow-inner">
+<span class="material-symbols-outlined text-lg">trending_up</span>
+</div>
+<div>
+<div class="text-[10px] text-slate-400 font-bold uppercase">Net Growth</div>
+<div class="text-lg font-extrabold text-slate-800">+24.8%</div>
+</div>
+</div>
+<div class="absolute bottom-[-20px] right-[20px] w-16 h-16 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b8860b] shadow-[0_10px_20px_rgba(184,134,11,0.3)] transform translate-z-[60px] animate-pulse-glow"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative py-24 sm:py-32 bg-transparent">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="mx-auto max-w-2xl lg:text-center mb-16">
+<h2 class="text-base font-bold uppercase tracking-widest text-secondary">Expertise</h2>
+<p class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">One Platform for All Financial Needs</p>
+<p class="mt-4 text-lg text-slate-600">Comprehensive compliance and advisory services for every business stage.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Service 1 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">account_balance</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">Income Tax Filing</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Expert preparation and submission of individual and corporate tax returns.</p>
+</div>
+<!-- Service 2 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">receipt_long</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">GST Registration</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Complete assistance for GST registration and monthly compliance management.</p>
+</div>
+<!-- Service 3 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">description</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">TDS Filing</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Accurate TDS calculations and timely filing of quarterly returns.</p>
+</div>
+<!-- Service 4 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">menu_book</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">Accounting</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Systematic record-keeping and financial reporting for business transparency.</p>
+</div>
+<!-- Service 5 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">rocket_launch</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">Startup Setup</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Seamless company incorporation and initial regulatory registrations.</p>
+</div>
+<!-- Service 6 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">corporate_fare</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">ROC Compliance</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Managing annual returns and periodic filings with the Registrar of Companies.</p>
+</div>
+<!-- Service 7 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">groups</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">Business Advisory</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Strategic insights for operational efficiency and sustainable growth.</p>
+</div>
+<!-- Service 8 -->
+<div class="group relative p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+<div class="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">savings</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 mb-3">Tax Planning</h3>
+<p class="text-sm text-slate-500 leading-relaxed">Proactive strategies to optimize tax liabilities and maximize savings.</p>
+</div>
+</div></div>
+</section>
+<section class="overflow-visible py-24 sm:py-32 relative group/section">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1/2 h-full bg-white/40 rounded-r-[4rem] shadow-sm -z-10"></div>
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
+<div class="lg:pr-8">
+<div class="lg:max-w-lg">
+<h2 class="text-base font-bold uppercase tracking-widest text-primary">Why Clients Trust We Aid Consultancy</h2>
+<p class="mt-2 text-4xl font-extrabold tracking-tight text-slate-900">Reliable Support for Your Business</p>
+<p class="mt-6 text-lg leading-8 text-slate-600">We focus on building long-term trust by delivering consistent professional support, clear communication, and accurate filing for every client.</p>
+<div class="mt-10 space-y-6"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">verified</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Experienced Professionals</p>
+<p class="text-xs text-slate-600">Deep expertise in taxation and compliance.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Reliable Support</p>
+<p class="text-xs text-slate-600">Available 9 AM - 9 PM, Mon - Sat.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">visibility</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Transparent Process</p>
+<p class="text-xs text-slate-600">Clear communication and professional ethics.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">fact_check</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Accurate Filing</p>
+<p class="text-xs text-slate-600">Ensuring regulatory compliance every time.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">payments</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Affordable Services</p>
+<p class="text-xs text-slate-600">Quality assistance at reasonable fees.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 bg-white/60 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary">handshake</span>
+<div>
+<p class="font-bold text-slate-900 text-sm">Long-Term Focus</p>
+<p class="text-xs text-slate-600">Building trust through consistent results.</p>
+</div>
+</div>
+</div></div>
+<div class="mt-10">
+<button class="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-clay-card hover:shadow-clay-card-hover transition-all border border-white/50">
+                                    Read Our Story <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative lg:ml-auto perspective-1000">
+<div class="relative w-full max-w-[500px] transform rotate-y-[-10deg] rotate-x-[5deg] transition-transform hover:rotate-y-0 hover:rotate-x-0 duration-500">
+<div class="absolute inset-0 bg-primary rounded-3xl transform translate-x-4 translate-y-4"></div>
+<img alt="Team meeting" class="relative rounded-3xl shadow-2xl ring-4 ring-white/90 z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoydBXDszfrEXUI_T0z5-ideehDNhlz0mT66mW8rOzumJDkg_guxypurpHt-DzDwNqhju94c0--BoRa1Ge9gdBTowL52zPbJiJwlNHocIpim7IW2T3t9tOBYLjRoZDeB0fHJCHr8LstV2nJn3Y14U8btV4JSYCTmzMX7KQ_8Ah_J4wdXffeYihzK7hWP5Oc_NC1YtmqPWaSO2qHAaH-SRxHT9OaCayNyEDkcolhZbh0HwkjCnLdKMh60b3yMkCm0lvycs1ffkaOJo"/>
+<div class="absolute -bottom-16 -right-10 w-64 h-64 z-20 pointer-events-none">
+<div class="w-full h-full flex items-end justify-around p-4 gap-4 perspective-1000">
+<div class="relative w-8 h-full">
+<div class="chart-bar-3d absolute bottom-0 w-8 h-[60%] transition-all duration-1000 group-hover/section:h-[80%]">
+<div class="chart-face front h-full bg-secondary"></div>
+<div class="chart-face back h-full bg-secondary-light"></div>
+<div class="chart-face right h-full bg-secondary-light"></div>
+<div class="chart-face left h-full bg-secondary"></div>
+<div class="chart-face top bg-secondary-light"></div>
+</div>
+</div>
+<div class="relative w-8 h-full">
+<div class="chart-bar-3d absolute bottom-0 w-8 h-[40%] transition-all duration-1000 delay-100 group-hover/section:h-[65%]">
+<div class="chart-face front h-full bg-primary-light"></div>
+<div class="chart-face back h-full bg-primary"></div>
+<div class="chart-face right h-full bg-primary"></div>
+<div class="chart-face left h-full bg-primary-light"></div>
+<div class="chart-face top bg-primary"></div>
+</div>
+</div>
+<div class="relative w-8 h-full">
+<div class="chart-bar-3d absolute bottom-0 w-8 h-[75%] transition-all duration-1000 delay-200 group-hover/section:h-[95%]">
+<div class="chart-face front h-full bg-green-500"></div>
+<div class="chart-face back h-full bg-green-400"></div>
+<div class="chart-face right h-full bg-green-400"></div>
+<div class="chart-face left h-full bg-green-500"></div>
+<div class="chart-face top bg-green-300"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-10 -left-10 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-white/60 max-w-xs z-30">
+<div class="flex items-center gap-3 mb-2">
+<div class="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-xs font-bold text-slate-400 uppercase">Client Satisfaction</span>
+</div>
+<div class="text-3xl font-extrabold text-slate-900">98%</div>
+<p class="text-sm text-slate-500 mt-1">Trusted by Individuals and Growing Businesses</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 sm:py-32 relative overflow-hidden">
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+<div class="mx-auto max-w-2xl text-center">
+<h2 class="text-base font-bold uppercase tracking-widest text-primary">Testimonials</h2>
+<p class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Trusted by Leaders</p>
+</div>
+<div class="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
+<div class="testimonial-carousel flex gap-8 overflow-x-auto pb-10 snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:pb-0"><div class="snap-center shrink-0 w-[300px] sm:w-auto h-full perspective-1000">
+<figure class="bubble-card flex flex-col h-full justify-between p-8 relative animate-float">
+<div class="absolute top-6 right-8 text-secondary opacity-20">
+<span class="material-symbols-outlined text-6xl">format_quote</span>
+</div>
+<blockquote class="text-slate-600 relative z-10 font-medium">
+<p class="leading-7">“We Aid Consultancy provided excellent support for our GST compliance and accounting. Their team is highly responsive and professional.”</p>
+</blockquote>
+<figcaption class="mt-8 flex items-center gap-x-4">
+<div class="h-12 w-12 rounded-full bg-gradient-to-tr from-slate-100 to-white shadow-inner flex items-center justify-center border border-white">
+<span class="material-symbols-outlined text-slate-400">person</span>
+</div>
+<div>
+<div class="font-bold text-slate-900">Business Owner</div>
+<div class="text-xs font-semibold text-primary">GST &amp; Accounting Client</div>
+</div>
+</figcaption>
+</figure>
+</div>
+<div class="snap-center shrink-0 w-[300px] sm:w-auto h-full perspective-1000">
+<figure class="bubble-card flex flex-col h-full justify-between p-8 relative animate-float-delayed">
+<div class="absolute top-6 right-8 text-secondary opacity-20">
+<span class="material-symbols-outlined text-6xl">format_quote</span>
+</div>
+<blockquote class="text-slate-600 relative z-10 font-medium">
+<p class="leading-7">“The tax filing process was extremely smooth and transparent. Highly recommended for reliable consultancy.”</p>
+</blockquote>
+<figcaption class="mt-8 flex items-center gap-x-4">
+<div class="h-12 w-12 rounded-full bg-gradient-to-tr from-slate-100 to-white shadow-inner flex items-center justify-center border border-white">
+<span class="material-symbols-outlined text-slate-400">person</span>
+</div>
+<div>
+<div class="font-bold text-slate-900">Salaried Professional</div>
+<div class="text-xs font-semibold text-primary">Income Tax Client</div>
+</div>
+</figcaption>
+</figure>
+</div>
+<div class="snap-center shrink-0 w-[300px] sm:w-auto h-full perspective-1000">
+<figure class="bubble-card flex flex-col h-full justify-between p-8 relative animate-float-slow">
+<div class="absolute top-6 right-8 text-secondary opacity-20">
+<span class="material-symbols-outlined text-6xl">format_quote</span>
+</div>
+<blockquote class="text-slate-600 relative z-10 font-medium">
+<p class="leading-7">“Professional guidance and timely response make them a dependable partner for financial compliance.”</p>
+</blockquote>
+<figcaption class="mt-8 flex items-center gap-x-4">
+<div class="h-12 w-12 rounded-full bg-gradient-to-tr from-slate-100 to-white shadow-inner flex items-center justify-center border border-white">
+<span class="material-symbols-outlined text-slate-400">person</span>
+</div>
+<div>
+<div class="font-bold text-slate-900">Startup Founder</div>
+<div class="text-xs font-semibold text-primary">Business Setup Client</div>
+</div>
+</figcaption>
+</figure>
+</div></div>
+</div>
+</div>
+</section>
+<section class="relative isolate overflow-hidden py-16 sm:py-24 lg:py-32 m-4 rounded-[3rem]">
+<div class="absolute inset-0 bg-primary z-0"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary-light via-primary to-slate-900 z-0"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 glowing-sphere rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+<div class="absolute top-[20%] right-[15%] w-24 h-24 glowing-sphere rounded-full opacity-60 animate-float"></div>
+<div class="absolute bottom-[20%] left-[15%] w-16 h-16 glowing-sphere rounded-full opacity-40 animate-float-delayed"></div>
+<div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 text-center">
+<h2 class="text-4xl font-extrabold tracking-tight text-white sm:text-6xl drop-shadow-md relative">Need Help With Tax or Compliance Matters?</h2>
+<p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-blue-100">Speak with our experts and receive reliable professional guidance. Available Monday – Saturday | 9:00 AM – 9:00 PM.</p>
+<div class="mt-10 flex items-center justify-center gap-x-6">
+<button class="rounded-full bg-white px-8 py-4 text-base font-bold text-primary shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] hover:-translate-y-1 transition-all">Book a Consultation</button>
+<a class="text-sm font-semibold leading-6 text-white flex items-center gap-2 hover:text-secondary transition-colors" href="#">Contact Our Team <span aria-hidden="true" class="material-symbols-outlined text-lg">arrow_forward</span></a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-slate-200 bg-clay-white py-12">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-4">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined text-sm">account_balance</span>
+</div>
+<span class="font-bold text-slate-900 text-lg">We Aid Consultancy</span>
+</div>
+<p class="text-sm text-slate-500">Providing professional services in taxation, compliance, and financial advisory for individuals and businesses.</p>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Company</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">About</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Resources</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Newsletter</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Events</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Legal</h3>
+<ul class="mt-4 space-y-2 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Licenses</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 border-t border-slate-100 pt-8 flex justify-between items-center">
+<p class="text-xs text-slate-400">© 2026 We Aid Consultancy. All Rights Reserved.</p>
+<div class="flex gap-4">
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</span>
+<span class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
