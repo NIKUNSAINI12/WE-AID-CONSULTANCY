@@ -47,7 +47,6 @@
             <!-- Hidden Fields for Booking -->
             <input type="hidden" name="meeting_date" id="selectedDateInput">
             <input type="hidden" name="meeting_time" id="selectedTimeInput">
-            <input type="hidden" name="service_type" id="serviceTypeInput" value="Business Advisory">
 
             <!-- Step 1: Schedule (Consultation Mode) -->
             <div id="step1" class="step-content">
@@ -87,7 +86,7 @@
                 </div>
 
                 {% if user %}
-                <div class="bg-blue-50 border border-blue-100 rounded-3xl p-6 mb-8 flex items-center gap-4">
+                <div class="bg-blue-50 border border-blue-100 rounded-3xl p-6 mb-6 flex items-center gap-4">
                     <div class="size-16 rounded-2xl bg-primary text-white flex items-center justify-center">
                         <span class="material-symbols-outlined text-3xl">account_circle</span>
                     </div>
@@ -100,16 +99,10 @@
                     <input type="hidden" name="email" value="{{ user.email }}">
                 </div>
                 {% else %}
-                <div class="space-y-4 mb-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Full Name</label>
-                            <input type="text" name="name" required placeholder="John Doe" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
-                            <input type="text" name="phone" id="phoneInput" required placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Full Name</label>
+                        <input type="text" name="name" required placeholder="John Doe" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Email Address</label>
@@ -118,21 +111,45 @@
                 </div>
                 {% endif %}
 
-                <!-- Inquiry Only Fields -->
-                <div class="inquiry-fields space-y-4 mb-8 hidden">
-                    {% if user %}
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
-                        <input type="text" name="phone" value="{{ user.phone if user.phone else '' }}" placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                <!-- Service Details (Modified to include Dropdown) -->
+                <div class="space-y-4 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Service Required</label>
+                            <div class="relative">
+                                <select name="service_type" id="serviceTypeInput" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all appearance-none font-bold text-slate-700">
+                                    <option value="Income Tax Filing">Income Tax Filing</option>
+                                    <option value="GST Registration">GST Registration</option>
+                                    <option value="TDS Filing">TDS Filing</option>
+                                    <option value="Accounting">Accounting</option>
+                                    <option value="Startup Setup">Startup Setup</option>
+                                    <option value="ROC Compliance">ROC Compliance</option>
+                                    <option value="Business Advisory">Business Advisory</option>
+                                    <option value="Tax Planning">Tax Planning</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Free Consultation">Free Consultation</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                                    <span class="material-symbols-outlined">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
+                            <input type="text" name="phone" id="phoneInput" required value="{{ user.phone if user and user.phone else '' }}" placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                        </div>
                     </div>
-                    {% endif %}
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Profession</label>
-                        <input type="text" name="profession" placeholder="e.g. Business Owner, Freelancer" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Profession</label>
+                            <input type="text" name="profession" placeholder="e.g. Creator, SME Owner" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                        </div>
                     </div>
+
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">How can we help you?</label>
-                        <textarea name="description" rows="3" placeholder="Tell us a bit about your requirement..." class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all"></textarea>
+                        <textarea name="description" rows="2" placeholder="Tell us about your requirements..." class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all"></textarea>
                     </div>
                 </div>
 
@@ -158,20 +175,22 @@
     function openModal(serviceName = 'Business Advisory', mode = 'inquiry') {
         const modal = document.getElementById('serviceModal');
         const progress = document.getElementById('progressContainer');
-        const inquiryFields = document.querySelector('.inquiry-fields');
         const submitBtn = document.getElementById('submitBtn');
         const backBtn = document.getElementById('backBtn');
         const title = document.getElementById('step2Title');
         const subtitle = document.getElementById('step2Subtitle');
         
         currentMode = mode;
-        document.getElementById('serviceTypeInput').value = serviceName;
+        
+        // Handle dropdown pre-selection
+        const select = document.getElementById('serviceTypeInput');
+        if (select) select.value = serviceName;
+        
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
 
         if (mode === 'consultation') {
             progress.classList.remove('hidden');
-            inquiryFields.classList.add('hidden');
             backBtn.classList.remove('hidden');
             title.innerText = "Final Confirmation";
             subtitle.innerText = "We'll send the Google Meet invitation link to this email.";
@@ -180,7 +199,6 @@
             initCalendar();
         } else {
             progress.classList.add('hidden');
-            inquiryFields.classList.remove('hidden');
             backBtn.classList.add('hidden');
             title.innerText = "Expert Assistance";
             subtitle.innerText = "Fill in your details and our team will get back to you shortly.";
