@@ -13,6 +13,11 @@
         cursor: pointer;
         padding: 1.25rem 2rem;
     }
+    @media (max-width: 640px) {
+        .floating-inquiry-tab {
+            padding: 0.75rem 1.5rem;
+        }
+    }
     .date-pill.active { background-color: #2b4c7e; color: white; border-color: #2b4c7e; }
     .time-slot.active { background-color: #cca43b; color: white; border-color: #cca43b; }
     .step-content { display: none; }
@@ -22,7 +27,7 @@
 
 <button onclick="openModal('General Inquiry', 'inquiry')" class="floating-inquiry-tab flex items-center gap-3 bg-[#2b4c7e] text-white rounded-t-3xl shadow-2xl hover:bg-[#1a3a63] border-x border-t border-white/20 whitespace-nowrap group">
     <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">interactive_space</span>
-    <span class="font-bold tracking-wider text-sm uppercase">Consult an Expert</span>
+    <span class="font-bold tracking-wider text-xs sm:text-sm uppercase">Consult an Expert</span>
     <div class="absolute -top-1 -right-1 flex h-3 w-3">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
         <span class="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
