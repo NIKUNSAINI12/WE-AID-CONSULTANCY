@@ -17,9 +17,10 @@
     .time-slot.active { background-color: #cca43b; color: white; border-color: #cca43b; }
     .step-content { display: none; }
     .step-content.active { display: block; }
+    .inquiry-only { display: none; }
 </style>
 
-<button onclick="openModal()" class="floating-inquiry-tab flex items-center gap-3 bg-[#2b4c7e] text-white rounded-t-3xl shadow-2xl hover:bg-[#1a3a63] border-x border-t border-white/20 whitespace-nowrap group">
+<button onclick="openModal('General Inquiry', 'inquiry')" class="floating-inquiry-tab flex items-center gap-3 bg-[#2b4c7e] text-white rounded-t-3xl shadow-2xl hover:bg-[#1a3a63] border-x border-t border-white/20 whitespace-nowrap group">
     <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">interactive_space</span>
     <span class="font-bold tracking-wider text-sm uppercase">Consult an Expert</span>
     <div class="absolute -top-1 -right-1 flex h-3 w-3">
@@ -36,8 +37,8 @@
             <span class="material-symbols-outlined">close</span>
         </button>
 
-        <!-- Progress Indicator -->
-        <div class="flex items-center justify-center gap-4 mb-8">
+        <!-- Progress Indicator (Only for consultation) -->
+        <div id="progressContainer" class="flex items-center justify-center gap-4 mb-8">
             <div id="stepDot1" class="w-12 h-2 rounded-full bg-primary transition-all"></div>
             <div id="stepDot2" class="w-12 h-2 rounded-full bg-slate-100 transition-all"></div>
         </div>
@@ -48,10 +49,10 @@
             <input type="hidden" name="meeting_time" id="selectedTimeInput">
             <input type="hidden" name="service_type" id="serviceTypeInput" value="Business Advisory">
 
-            <!-- Step 1: Schedule -->
-            <div id="step1" class="step-content active">
+            <!-- Step 1: Schedule (Consultation Mode) -->
+            <div id="step1" class="step-content">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-extrabold text-[#2b4c7e] mb-2" id="modalTitle">Schedule Your Consultation</h2>
+                    <h2 class="text-3xl font-extrabold text-[#2b4c7e] mb-2">Schedule Your Consultation</h2>
                     <p class="text-slate-500 text-sm">Select a convenient date and time for our Google Meet session.</p>
                 </div>
 
@@ -78,11 +79,11 @@
                 </div>
             </div>
 
-            <!-- Step 2: User Details -->
-            <div id="step2" class="step-content">
+            <!-- Step 2: User Details (Both Modes) -->
+            <div id="step2" class="step-content active">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-extrabold text-[#2b4c7e] mb-2">Final Confirmation</h2>
-                    <p class="text-slate-500 text-sm">We'll send the Google Meet invitation link to this email.</p>
+                    <h2 class="text-3xl font-extrabold text-[#2b4c7e] mb-2" id="step2Title">Final Confirmation</h2>
+                    <p class="text-slate-500 text-sm" id="step2Subtitle">We'll send the Google Meet invitation link to this email.</p>
                 </div>
 
                 {% if user %}
@@ -97,10 +98,9 @@
                     </div>
                     <input type="hidden" name="name" value="{{ user.name }}">
                     <input type="hidden" name="email" value="{{ user.email }}">
-                    <input type="hidden" name="phone" value="{{ user.phone if user.phone else 'N/A' }}">
                 </div>
                 {% else %}
-                <div class="space-y-4 mb-8">
+                <div class="space-y-4 mb-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Full Name</label>
@@ -108,7 +108,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
-                            <input type="text" name="phone" required placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                            <input type="text" name="phone" id="phoneInput" required placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
                         </div>
                     </div>
                     <div>
@@ -118,11 +118,29 @@
                 </div>
                 {% endif %}
 
+                <!-- Inquiry Only Fields -->
+                <div class="inquiry-fields space-y-4 mb-8 hidden">
+                    {% if user %}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Phone Number</label>
+                        <input type="text" name="phone" value="{{ user.phone if user.phone else '' }}" placeholder="+91 00000 00000" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                    </div>
+                    {% endif %}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Profession</label>
+                        <input type="text" name="profession" placeholder="e.g. Business Owner, Freelancer" class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">How can we help you?</label>
+                        <textarea name="description" rows="3" placeholder="Tell us a bit about your requirement..." class="w-full bg-slate-50 border-slate-100 rounded-2xl px-6 py-3 focus:ring-2 focus:ring-primary transition-all"></textarea>
+                    </div>
+                </div>
+
                 <div class="space-y-4">
-                    <button type="submit" class="w-full bg-primary text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-primary-light transition-all transform hover:-translate-y-1">
+                    <button type="submit" id="submitBtn" class="w-full bg-primary text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-primary-light transition-all transform hover:-translate-y-1">
                         Book Consultation & Get GMeet Link
                     </button>
-                    <button type="button" onclick="goToStep(1)" class="w-full text-slate-400 font-bold text-sm hover:text-primary transition-colors py-2">
+                    <button type="button" id="backBtn" onclick="goToStep(1)" class="w-full text-slate-400 font-bold text-sm hover:text-primary transition-colors py-2">
                         ← Change Date/Time
                     </button>
                 </div>
@@ -135,19 +153,50 @@
     const slots = ["10:00 AM", "11:00 AM", "12:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
     let selectedDate = null;
     let selectedTime = null;
+    let currentMode = 'consultation';
 
-    function openModal(serviceName = 'Business Advisory') {
+    function openModal(serviceName = 'Business Advisory', mode = 'inquiry') {
         const modal = document.getElementById('serviceModal');
+        const progress = document.getElementById('progressContainer');
+        const inquiryFields = document.querySelector('.inquiry-fields');
+        const submitBtn = document.getElementById('submitBtn');
+        const backBtn = document.getElementById('backBtn');
+        const title = document.getElementById('step2Title');
+        const subtitle = document.getElementById('step2Subtitle');
+        
+        currentMode = mode;
         document.getElementById('serviceTypeInput').value = serviceName;
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        initCalendar();
+
+        if (mode === 'consultation') {
+            progress.classList.remove('hidden');
+            inquiryFields.classList.add('hidden');
+            backBtn.classList.remove('hidden');
+            title.innerText = "Final Confirmation";
+            subtitle.innerText = "We'll send the Google Meet invitation link to this email.";
+            submitBtn.innerText = "Book Consultation & Get GMeet Link";
+            goToStep(1);
+            initCalendar();
+        } else {
+            progress.classList.add('hidden');
+            inquiryFields.classList.remove('hidden');
+            backBtn.classList.add('hidden');
+            title.innerText = "Expert Assistance";
+            subtitle.innerText = "Fill in your details and our team will get back to you shortly.";
+            submitBtn.innerText = "Submit Inquiry";
+            
+            // Clear meeting info
+            document.getElementById('selectedDateInput').value = "";
+            document.getElementById('selectedTimeInput').value = "";
+            
+            goToStep(2);
+        }
     }
 
     function closeModal() {
         document.getElementById('serviceModal').classList.add('hidden');
         document.body.style.overflow = 'auto';
-        goToStep(1);
     }
 
     function initCalendar() {
@@ -213,17 +262,18 @@
         document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
         document.getElementById(`step${step}`).classList.add('active');
         
-        document.getElementById('stepDot1').className = step >= 1 ? 'w-12 h-2 rounded-full bg-primary transition-all' : 'w-12 h-2 rounded-full bg-slate-100 transition-all';
-        document.getElementById('stepDot2').className = step >= 2 ? 'w-12 h-2 rounded-full bg-primary transition-all' : 'w-12 h-2 rounded-full bg-slate-100 transition-all';
+        if (currentMode === 'consultation') {
+            document.getElementById('stepDot1').className = step >= 1 ? 'w-12 h-2 rounded-full bg-primary transition-all' : 'w-12 h-2 rounded-full bg-slate-100 transition-all';
+            document.getElementById('stepDot2').className = step >= 2 ? 'w-12 h-2 rounded-full bg-primary transition-all' : 'w-12 h-2 rounded-full bg-slate-100 transition-all';
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('status') === 'success') {
-            alert('🎉 Appointment Confirmed! You have been redirected to the Google Meet link.');
+            alert('🎉 Thank you! Your request has been received.');
         }
     });
 
-    // Handle existing openModal calls from buttons
     window.openModal = openModal;
 </script>

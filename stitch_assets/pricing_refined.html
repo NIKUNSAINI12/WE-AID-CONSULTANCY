@@ -183,7 +183,7 @@
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Single House property</li>
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Basic planning session</li>
 </ul>
-<button class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
+<button onclick="openModal('Individual Tax filing', 'inquiry')" class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
 </div>
 <div class="bubble-card p-10 flex flex-col items-center text-center border-2 border-primary ring-4 ring-primary/5">
 <div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest">Popular</div>
@@ -199,7 +199,7 @@
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> TDS compliance check</li>
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Presumptive (44AD)</li>
 </ul>
-<button class="w-full h-14 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/30 hover:-translate-y-1 transition-all">Get Started</button>
+<button onclick="openModal('Business Tax Filing', 'inquiry')" class="w-full h-14 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/30 hover:-translate-y-1 transition-all">Get Started</button>
 </div>
 <div class="bubble-card p-10 flex flex-col items-center text-center">
 <h3 class="text-xl font-extrabold text-slate-800 mb-2">HNI / NRI</h3>
@@ -213,7 +213,7 @@
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Multiple Capital gains</li>
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">check_circle</span> Estate &amp; Wealth</li>
 </ul>
-<button class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
+<button onclick="openModal('HNI / NRI Tax Filing', 'inquiry')" class="w-full h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Get Started</button>
 </div>
 </div>
 </section>
@@ -231,7 +231,7 @@
 <span class="text-xs font-bold text-slate-400">ONE-TIME</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">End-to-end support for new GST registration with 100% compliance guarantee.</p>
-<button class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Apply Now</button>
+<button onclick="openModal('GST Registration', 'inquiry')" class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Apply Now</button>
 </div>
 <div class="bubble-card p-10 flex flex-col border-l-8 border-primary">
 <h3 class="text-lg font-extrabold text-slate-800 mb-6">Monthly Filing</h3>
@@ -240,7 +240,7 @@
 <span class="text-xs font-bold text-slate-400">/MONTH</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">Filing of GSTR-1, GSTR-3B and reconciliation of input tax credit (GSTR-2B).</p>
-<button class="mt-auto h-12 rounded-xl bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:bg-primary-light transition-all">Subscribe</button>
+<button onclick="openModal('GST Monthly Filing', 'inquiry')" class="mt-auto h-12 rounded-xl bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:bg-primary-light transition-all">Subscribe</button>
 </div>
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-lg font-extrabold text-slate-800 mb-6">Annual Audit</h3>
@@ -249,7 +249,7 @@
 <span class="text-xs font-bold text-slate-400">/ANNUM</span>
 </div>
 <p class="text-sm text-slate-600 mb-10 leading-relaxed">Comprehensive GSTR-9 and GSTR-9C filing with detailed tax reconciliation reports.</p>
-<button class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Book Audit</button>
+<button onclick="openModal('GST Annual Audit', 'inquiry')" class="mt-auto h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Book Audit</button>
 </div>
 </div>
 </section>
@@ -271,7 +271,7 @@
 <li class="flex items-center gap-3 text-sm font-medium"><span class="material-symbols-outlined">verified</span> 2 DIN &amp; DSC included</li>
 <li class="flex items-center gap-3 text-sm font-medium"><span class="material-symbols-outlined">verified</span> PAN &amp; TAN Processing</li>
 </ul>
-<button class="h-14 rounded-2xl bg-white text-primary font-bold hover:scale-105 transition-all">Incorporate Now</button>
+<button onclick="openModal('Private Limited Incorporation', 'inquiry')" class="h-14 rounded-2xl bg-white text-primary font-bold hover:scale-105 transition-all">Incorporate Now</button>
 </div>
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-xl font-extrabold text-slate-800 mb-6">LLP Registration</h3>
@@ -283,7 +283,7 @@
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Partnership Deed drafting</li>
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> RoC Compliance setup</li>
 </ul>
-<button class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Start Now</button>
+<button onclick="openModal('LLP Registration', 'inquiry')" class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Start Now</button>
 </div>
 <div class="bubble-card p-10 flex flex-col">
 <h3 class="text-xl font-extrabold text-slate-800 mb-6">One Person Co.</h3>
@@ -295,7 +295,7 @@
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Single Director setup</li>
 <li class="flex items-center gap-3 text-sm font-medium text-slate-600"><span class="material-symbols-outlined text-primary">verified</span> Corporate seal &amp; stationery</li>
 </ul>
-<button class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Select Plan</button>
+<button onclick="openModal('One Person Co. Registration', 'inquiry')" class="h-14 rounded-2xl bg-background-light text-slate-700 font-bold shadow-clay-card hover:bg-primary hover:text-white transition-all">Select Plan</button>
 </div>
 </div>
 </section>
@@ -306,7 +306,7 @@
 <div class="relative z-10">
 <h2 class="text-3xl md:text-5xl font-black text-white dark:text-slate-100 mb-8">Need Help With Tax or Compliance Matters?</h2>
 <p class="text-lg text-slate-400 dark:text-slate-400 mb-10">Connect with our senior consultants for a tailored strategy for your business or individual needs.</p>
-<button class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-2xl flex items-center gap-3 mx-auto book-btn">
+<button onclick="openModal('Free Consultation', 'consultation')" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-2xl flex items-center gap-3 mx-auto book-btn">
 <span class="material-symbols-outlined">calendar_month</span>
                         Book a Consultation
                     </button>

@@ -273,45 +273,69 @@ async def register_service(
     try:
         supabase.table("registrations").insert(data).execute()
         
-        # Prepare Email Content
+        is_consultation = meeting_date and meeting_time
         meet_link = os.getenv("GMEET_LINK", "https://meet.google.com/weaid-consultancy-meeting")
-        client_html = f"""
-        <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-            <h2 style="color: #2b4c7e;">Consultation Confirmed!</h2>
-            <p>Dear {name},</p>
-            <p>Thank you for booking a free consultation with We Aid Consultancy. Your session has been scheduled successfully.</p>
-            <div style="background: #f6f4f1; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <p><strong>Service:</strong> {service_type}</p>
-                <p><strong>Date:</strong> {meeting_date}</p>
-                <p><strong>Time:</strong> {meeting_time} (IST)</p>
-            </div>
-            <p>You can join the meeting at the scheduled time using the link below:</p>
-            <a href="{meet_link}" style="display: inline-block; background: #2b4c7e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Join Google Meet</a>
-            <p style="margin-top: 30px; font-size: 12px; color: #888;">If you didn't request this, please ignore this email.</p>
-        </div>
-        """
         
+        # Prepare Email Content
+        if is_consultation:
+            subject = f"Consultation Confirmed: {service_type}"
+            client_html = f"""
+            <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                <h2 style="color: #2b4c7e;">Consultation Confirmed!</h2>
+                <p>Dear {name},</p>
+                <p>Thank you for booking a free consultation with We Aid Consultancy. Your session has been scheduled successfully.</p>
+                <div style="background: #f6f4f1; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p><strong>Service:</strong> {service_type}</p>
+                    <p><strong>Date:</strong> {meeting_date}</p>
+                    <p><strong>Time:</strong> {meeting_time} (IST)</p>
+                </div>
+                <p>You can join the meeting at the scheduled time using the link below:</p>
+                <a href="{meet_link}" style="display: inline-block; background: #2b4c7e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Join Google Meet</a>
+                <p style="margin-top: 30px; font-size: 12px; color: #888;">If you didn't request this, please ignore this email.</p>
+            </div>
+            """
+        else:
+            subject = f"Inquiry Received: {service_type}"
+            client_html = f"""
+            <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                <h2 style="color: #2b4c7e;">Inquiry Received!</h2>
+                <p>Dear {name},</p>
+                <p>Thank you for your inquiry regarding <strong>{service_type}</strong>. Our expert team has received your details and will get back to you shortly.</p>
+                <div style="background: #f6f4f1; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p><strong>Proposed Service:</strong> {service_type}</p>
+                    <p><strong>Profession:</strong> {profession or 'Not Specified'}</p>
+                </div>
+                <p>We appreciate your interest in We Aid Consultancy.</p>
+                <p style="margin-top: 30px; font-size: 12px; color: #888;">This is an automated acknowledgment.</p>
+            </div>
+            """
+
         admin_html = f"""
         <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-            <h2 style="color: #cca43b;">New Consultation Booking</h2>
-            <p>A new lead has booked a consultation:</p>
+            <h2 style="color: #cca43b;">New {'Consultation' if is_consultation else 'General Inquiry'}</h2>
+            <p>A new lead has submitted a request:</p>
             <ul style="list-style: none; padding: 0;">
                 <li><strong>Name:</strong> {name}</li>
                 <li><strong>Email:</strong> {email}</li>
                 <li><strong>Phone:</strong> {phone}</li>
+                <li><strong>Profession:</strong> {profession or 'N/A'}</li>
                 <li><strong>Service:</strong> {service_type}</li>
-                <li><strong>Scheduled:</strong> {meeting_date} at {meeting_time}</li>
+                {'<li><strong>Scheduled:</strong> ' + meeting_date + ' at ' + meeting_time + '</li>' if is_consultation else ''}
+                <li><strong>Description:</strong> {description or 'N/A'}</li>
             </ul>
             <a href="https://we-aid-consultancy.vercel.app/admin/leads" style="display: inline-block; background: #2b4c7e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View in Dashboard</a>
         </div>
         """
 
         # Send Emails in Background
-        background_tasks.add_task(send_email, f"Consultation Confirmed: {service_type}", email, client_html)
+        background_tasks.add_task(send_email, subject, email, client_html)
         background_tasks.add_task(send_email, f"NEW LEAD: {name} ({service_type})", "neha@weaidconsultancy.com", admin_html)
         background_tasks.add_task(send_email, f"NEW LEAD: {name} ({service_type})", "yajdev@weaidconsultancy.com", admin_html)
 
-        return RedirectResponse(url=meet_link, status_code=303)
+        if is_consultation:
+            return RedirectResponse(url=meet_link, status_code=303)
+        else:
+            return RedirectResponse(url="/?status=success", status_code=303)
     except Exception as e:
         print(f"Registration Error: {e}")
         return RedirectResponse(url="/?status=error", status_code=303)
