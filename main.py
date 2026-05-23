@@ -4,9 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from supabase import create_client, Client
+from passlib.context import CryptContext
 import os
 import shutil
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
@@ -28,6 +29,12 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "stitch_assets")), name="static")
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "stitch_assets"))
+
+# Password hashing context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# IST timezone (UTC+5:30)
+IST = timezone(timedelta(hours=5, minutes=30))
 
 # --- Helper Functions ---
 def get_current_user(request: Request):
@@ -72,19 +79,34 @@ async def about(request: Request):
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    # Redirect already-logged-in users to home
+    if get_current_user(request):
+        return RedirectResponse(url="/", status_code=303)
+    
+    # Read and immediately clear the one-time flash message
+    flash = request.session.pop("flash", None)
+    return templates.TemplateResponse("login.html", {"request": request, "flash": flash})
 
 @app.post("/login")
 async def login(request: Request, email: str = Form(...), password: str = Form(...)):
     try:
-        response = supabase.table("users").select("*").eq("email", email).eq("password", password).execute()
+        # Fetch user by email only, then verify password hash
+        response = supabase.table("users").select("*").eq("email", email).execute()
         user = response.data[0] if response.data else None
         
-        if user:
-            request.session["user"] = user
+        if user and pwd_context.verify(password, user["password"]):
+            # Store only safe, non-sensitive fields in session
+            request.session["user"] = {
+                "id": user["id"],
+                "name": user["name"],
+                "email": user["email"],
+                "phone": user.get("phone", ""),
+                "role": user["role"],
+                "profession": user.get("profession", "")
+            }
             return RedirectResponse(url="/", status_code=303)
         
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid credentials"})
+        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid email or password."})
     except Exception as e:
         print(f"Login Error: {str(e)}")
         return HTMLResponse(content=f"Login Error: {str(e)}", status_code=500)
@@ -94,7 +116,7 @@ async def signup_page(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
 @app.post("/signup")
-async def signup(request: Request, name: str = Form(...), email: str = Form(...), password: str = Form(...), phone: str = Form(...)):
+async def signup(request: Request, name: str = Form(...), email: str = Form(...), password: str = Form(...), phone: str = Form(...), profession: str = Form(None)):
     try:
         # Check if email already exists
         existing = supabase.table("users").select("email").eq("email", email).execute()
@@ -104,15 +126,18 @@ async def signup(request: Request, name: str = Form(...), email: str = Form(...)
         user_data = {
             "name": name,
             "email": email,
-            "password": password,
+            "password": pwd_context.hash(password),  # Store bcrypt hash, never plain text
             "phone": phone,
+            "profession": profession,
             "role": "viewer",
             "is_contacted": "no",
             "response": ""
         }
         supabase.table("users").insert(user_data).execute()
         
-        return RedirectResponse(url="/login?signup=success", status_code=303)
+        # Use a session flash message (shows exactly once, not tied to URL)
+        request.session["flash"] = "account_created"
+        return RedirectResponse(url="/login", status_code=303)
     except Exception as e:
         print(f"Signup Error: {str(e)}")
         return HTMLResponse(content=f"Signup Error: {str(e)}", status_code=500)
@@ -145,8 +170,12 @@ async def subscribe(email: str = Form(...)):
     try:
         supabase.table("newsletters").insert({"email": email}).execute()
         return RedirectResponse(url="/blog?subscribed=true", status_code=303)
-    except:
-        return RedirectResponse(url="/blog?error=already_subscribed", status_code=303)
+    except Exception as e:
+        err_str = str(e).lower()
+        if "duplicate" in err_str or "unique" in err_str:
+            return RedirectResponse(url="/blog?error=already_subscribed", status_code=303)
+        print(f"Subscribe Error: {e}")
+        return RedirectResponse(url="/blog?error=subscribe_failed", status_code=303)
 
 @app.get("/admin", response_class=HTMLResponse)
 async def admin(request: Request):
@@ -353,10 +382,10 @@ async def admin_leads(request: Request, filter: str = "all", response: str = "al
     
     # Apply time filter
     if filter == "today":
-        # Using UTC today as Supabase stores in UTC
-        today = datetime.utcnow().strftime("%Y-%m-%d")
-        reg_query = reg_query.gte("created_at", f"{today}T00:00:00")
-        user_query = user_query.gte("created_at", f"{today}T00:00:00")
+        # Use IST (UTC+5:30) for correct India-local date filtering
+        today = datetime.now(IST).strftime("%Y-%m-%d")
+        reg_query = reg_query.gte("created_at", f"{today}T00:00:00+05:30")
+        user_query = user_query.gte("created_at", f"{today}T00:00:00+05:30")
     
     reg_data = reg_query.execute().data
     user_data = user_query.execute().data
@@ -375,7 +404,10 @@ async def admin_leads(request: Request, filter: str = "all", response: str = "al
             "status": r.get("status", "uncontacted"),
             "response": r.get("response", ""),
             "created_at": r["created_at"],
-            "source": "registration"
+            "source": "registration",
+            # Include meeting fields so admin can see scheduled consultations
+            "meeting_date": r.get("meeting_date", ""),
+            "meeting_time": r.get("meeting_time", "")
         })
         
     for u in user_data:

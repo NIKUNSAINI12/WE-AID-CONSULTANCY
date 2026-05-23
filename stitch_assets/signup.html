@@ -18,6 +18,12 @@
             <p class="text-slate-500 text-sm">Join our community for expert insights</p>
         </div>
 
+        {% if error %}
+        <div class="bg-red-50 text-red-500 p-4 rounded-xl text-sm mb-6 font-bold border border-red-100">
+            {{ error }}
+        </div>
+        {% endif %}
+
         <form action="/signup" method="POST" class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 ml-1">Full Name</label>
