@@ -228,8 +228,8 @@
         container.innerHTML = '';
         timeContainer.innerHTML = '';
         
-        // Generate next 7 days
-        for (let i = 0; i < 7; i++) {
+        // Generate next 30 days (1 month)
+        for (let i = 0; i < 30; i++) {
             const date = new Date();
             date.setDate(date.getDate() + i);
             if (date.getDay() === 0) continue; // Skip Sundays
