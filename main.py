@@ -71,11 +71,11 @@ def send_email(subject: str, recipient_email: str, content_html: str):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("home_section_refined.html", {"request": request, "user": get_current_user(request)})
+    return templates.TemplateResponse(request=request, name="home_section_refined.html", context={"request": request, "user": get_current_user(request)})
 
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request, "user": get_current_user(request)})
+    return templates.TemplateResponse(request=request, name="about.html", context={"request": request, "user": get_current_user(request)})
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
@@ -85,7 +85,7 @@ async def login_page(request: Request):
     
     # Read and immediately clear the one-time flash message
     flash = request.session.pop("flash", None)
-    return templates.TemplateResponse("login.html", {"request": request, "flash": flash})
+    return templates.TemplateResponse(request=request, name="login.html", context={"request": request, "flash": flash})
 
 @app.post("/login")
 async def login(request: Request, email: str = Form(...), password: str = Form(...)):
@@ -117,14 +117,14 @@ async def login(request: Request, email: str = Form(...), password: str = Form(.
             }
             return RedirectResponse(url="/", status_code=303)
         
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid email or password."})
+        return templates.TemplateResponse(request=request, name="login.html", context={"request": request, "error": "Invalid email or password."})
     except Exception as e:
         print(f"Login Error: {str(e)}")
         return HTMLResponse(content=f"Login Error: {str(e)}", status_code=500)
 
 @app.get("/signup", response_class=HTMLResponse)
 async def signup_page(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="signup.html", context={"request": request})
 
 @app.post("/signup")
 async def signup(request: Request, name: str = Form(...), email: str = Form(...), password: str = Form(...), phone: str = Form(...), profession: str = Form(None)):
@@ -132,7 +132,7 @@ async def signup(request: Request, name: str = Form(...), email: str = Form(...)
         # Check if email already exists
         existing = supabase.table("users").select("email").eq("email", email).execute()
         if existing.data:
-            return templates.TemplateResponse("signup.html", {"request": request, "error": "This email is already registered."})
+            return templates.TemplateResponse(request=request, name="signup.html", context={"request": request, "error": "This email is already registered."})
 
         user_data = {
             "name": name,
@@ -159,7 +159,7 @@ async def blog_post(request: Request, post_id: str):
     if not res.data:
         raise HTTPException(status_code=404, detail="Post not found")
     
-    return templates.TemplateResponse("blog_post.html", {
+    return templates.TemplateResponse(request=request, name="blog_post.html", context={
         "request": request, 
         "post": res.data[0], 
         "user": get_current_user(request)
@@ -174,7 +174,7 @@ async def logout(request: Request):
 async def blog(request: Request):
     response = supabase.table("posts").select("*").order("created_at", desc=True).execute()
     posts = response.data
-    return templates.TemplateResponse("blog_insights.html", {"request": request, "posts": posts, "user": get_current_user(request)})
+    return templates.TemplateResponse(request=request, name="blog_insights.html", context={"request": request, "posts": posts, "user": get_current_user(request)})
 
 @app.post("/subscribe")
 async def subscribe(email: str = Form(...)):
@@ -193,7 +193,7 @@ async def admin(request: Request):
     user = get_current_user(request)
     if not user or user["role"] != "admin":
         return RedirectResponse(url="/login", status_code=303)
-    return templates.TemplateResponse("admin_blog.html", {"request": request, "user": user})
+    return templates.TemplateResponse(request=request, name="admin_blog.html", context={"request": request, "user": user})
 
 @app.post("/upload-blog")
 async def upload_blog(
@@ -243,7 +243,7 @@ async def edit_blog_page(request: Request, post_id: str):
     if not response.data:
         raise HTTPException(status_code=404, detail="Post not found")
         
-    return templates.TemplateResponse("admin_edit_blog.html", {"request": request, "post": response.data[0], "user": user})
+    return templates.TemplateResponse(request=request, name="admin_edit_blog.html", context={"request": request, "post": response.data[0], "user": user})
 
 @app.post("/admin/edit/{post_id}")
 async def update_blog(
@@ -445,7 +445,7 @@ async def admin_leads(request: Request, filter: str = "all", response: str = "al
     # Sort by created_at desc
     combined_leads.sort(key=lambda x: x["created_at"], reverse=True)
     
-    return templates.TemplateResponse("admin_registrations.html", {
+    return templates.TemplateResponse(request=request, name="admin_registrations.html", context={
         "request": request, 
         "leads": combined_leads, 
         "user": user,
@@ -485,7 +485,7 @@ async def pricing(request: Request):
     response = supabase.table("pricing").select("*").execute()
     # Convert list of rows to a simple dict: {"tax_individual": "₹999", ...}
     prices = {item['id']: item['price'] for item in response.data}
-    return templates.TemplateResponse("pricing_refined.html", {"request": request, "user": get_current_user(request), "prices": prices})
+    return templates.TemplateResponse(request=request, name="pricing_refined.html", context={"request": request, "user": get_current_user(request), "prices": prices})
 
 @app.get("/admin/pricing", response_class=HTMLResponse)
 async def admin_pricing(request: Request):
@@ -494,7 +494,7 @@ async def admin_pricing(request: Request):
         return RedirectResponse(url="/login", status_code=303)
     
     response = supabase.table("pricing").select("*").execute()
-    return templates.TemplateResponse("admin_pricing.html", {"request": request, "pricing": response.data})
+    return templates.TemplateResponse(request=request, name="admin_pricing.html", context={"request": request, "pricing": response.data})
 
 @app.post("/admin/pricing/update")
 async def update_pricing(
