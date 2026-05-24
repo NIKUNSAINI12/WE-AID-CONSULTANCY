@@ -94,7 +94,18 @@ async def login(request: Request, email: str = Form(...), password: str = Form(.
         response = supabase.table("users").select("*").eq("email", email).execute()
         user = response.data[0] if response.data else None
         
-        if user and pwd_context.verify(password, user["password"]):
+        is_valid = False
+        if user:
+            try:
+                is_valid = pwd_context.verify(password, user["password"])
+            except Exception as e:
+                # Fallback for legacy plaintext passwords (throws UnknownHashError)
+                if password == user["password"]:
+                    is_valid = True
+                    # Auto-upgrade the plaintext password to a bcrypt hash in the DB
+                    supabase.table("users").update({"password": pwd_context.hash(password)}).eq("id", user["id"]).execute()
+        
+        if is_valid:
             # Store only safe, non-sensitive fields in session
             request.session["user"] = {
                 "id": user["id"],
